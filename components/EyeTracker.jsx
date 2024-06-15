@@ -66,17 +66,23 @@ export default function EyeTracker() {
     <div className="flex justify-evenly align-middle">
       <div className="text-center m-5 ml-[6rem] p-8">News Contents</div>
       <div className="flex align-middle">
-        <Link
-          className="bg-slate-400 m-6 p-2 w-32 h-16 rounded-xl flex items-center justify-center"
-          href="/calibrate"
-        >
-          Calibrate
-        </Link>
+        {!enableWebgazer ? (
+          <span className="cursor-not-allowed bg-slate-100 text-zinc-500 m-6 p-2 w-32 h-16 rounded-xl flex items-center justify-center">
+            Calibrate
+          </span>
+        ) : (
+          <Link
+            className="bg-slate-400 m-6 p-2 w-32 h-16 rounded-xl flex items-center justify-center"
+            href="/calibrate"
+          >
+            Calibrate
+          </Link>
+        )}
         <button
           className={`${
             enableWebgazer
               ? "bg-slate-400 text-zinc-950"
-              : "bg-slate-100 text-zinc-500"
+              : "bg-slate-100 text-zinc-500 cursor-not-allowed"
           } m-6 p-2 w-32 h-16 rounded-xl`}
           onClick={handlePreview}
           disabled={!enableWebgazer}
@@ -87,7 +93,7 @@ export default function EyeTracker() {
           className={`${
             enableWebgazer
               ? "bg-slate-400 text-zinc-950"
-              : "bg-slate-100 text-zinc-500"
+              : "bg-slate-100 text-zinc-500 cursor-not-allowed"
           } m-6 p-2 w-32 h-16 rounded-xl`}
           onClick={handlePrediction}
           disabled={!enableWebgazer}
