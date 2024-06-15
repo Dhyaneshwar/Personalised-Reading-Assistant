@@ -1,22 +1,32 @@
 "use client";
-import { initializeWebGazer } from "@/lib/webgazerHandler";
+import {
+  handleVideo,
+  initializeWebGazer,
+  initialWebgazerSetup,
+} from "@/lib/webgazerHandler";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function EyeTracker() {
-  const [webGazerLoaded, setWebGazerLoaded] = useState(false);
   const [enableWebgazer, setEnableWebgazer] = useState(true);
   const [showPreview, setShowPreview] = useState(true);
   const [showPredictions, setShowPredictions] = useState(true);
 
   useEffect(() => {
-    initializeWebGazer(setWebGazerLoaded);
+    const { webgazer } = window;
+    if (webgazer) {
+      initialWebgazerSetup(webgazer);
+    } else {
+      initializeWebGazer();
+    }
 
     return () => {
       if (window.webgazer) {
+        window.webgazer.stopVideo();
         window.webgazer.end();
       }
     };
-  }, [setWebGazerLoaded]);
+  }, []);
 
   const handleWebgazerState = () => {
     const { webgazer } = window;
@@ -34,13 +44,6 @@ export default function EyeTracker() {
       }
       return !prevState;
     });
-  };
-
-  const handleVideo = (webgazer, state) => {
-    webgazer.showVideo(state);
-    webgazer.showVideoPreview(state);
-    webgazer.showFaceOverlay(state);
-    webgazer.showFaceFeedbackBox(state);
   };
 
   const handlePreview = () => {
@@ -61,16 +64,20 @@ export default function EyeTracker() {
 
   return (
     <div className="flex justify-evenly align-middle">
-      <div className="text-center m-5 ml-[6rem] p-8">
-        {webGazerLoaded ? "WebGazer is running..." : "Loading WebGazer..."}
-      </div>
+      <div className="text-center m-5 ml-[6rem] p-8">News Contents</div>
       <div className="flex align-middle">
+        <Link
+          className="bg-slate-400 m-6 p-2 w-32 h-16 rounded-xl flex items-center justify-center"
+          href="/calibrate"
+        >
+          Calibrate
+        </Link>
         <button
           className={`${
             enableWebgazer
               ? "bg-slate-400 text-zinc-950"
               : "bg-slate-100 text-zinc-500"
-          } m-6 p-2 w-[8rem] h-[4rem] rounded-xl`}
+          } m-6 p-2 w-32 h-16 rounded-xl`}
           onClick={handlePreview}
           disabled={!enableWebgazer}
         >
@@ -81,14 +88,14 @@ export default function EyeTracker() {
             enableWebgazer
               ? "bg-slate-400 text-zinc-950"
               : "bg-slate-100 text-zinc-500"
-          } m-6 p-2 w-[8rem]  h-[4rem] rounded-xl`}
+          } m-6 p-2 w-32 h-16 rounded-xl`}
           onClick={handlePrediction}
           disabled={!enableWebgazer}
         >
           {showPredictions ? "Hide" : "Show"} Predictions
         </button>
         <button
-          className="bg-slate-400 m-6 p-2 w-[8rem]  h-[4rem] rounded-xl"
+          className="bg-slate-400 m-6 p-2 w-32 h-16 rounded-xl"
           onClick={handleWebgazerState}
         >
           {enableWebgazer ? "Disable" : "Enable"} Webgazer
