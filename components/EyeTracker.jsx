@@ -22,8 +22,8 @@ export default function EyeTracker() {
 
     return () => {
       if (window.webgazer) {
-        window.webgazer.stopVideo();
-        window.webgazer.end();
+        window.webgazer?.stopVideo();
+        window.webgazer?.end();
       }
     };
   }, []);

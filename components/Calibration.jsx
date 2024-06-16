@@ -23,22 +23,24 @@ function CalibratePage() {
     }
     return () => {
       if (window.webgazer) {
-        window.webgazer.stopVideo();
-        window.webgazer.end();
+        window.webgazer?.stopVideo();
+        window.webgazer?.end();
       }
     };
   });
 
   return (
-    <>
-      <div>Calibrate Page</div>
+    <div className="flex justify-around items-center bg-stone-600 mb-4 text-center font-medium p-2">
+      <div className="text-white ml-12 flex-grow-[1] text-4xl">
+        Calibrate Page
+      </div>
       <button
         onClick={handleBack}
-        className="bg-blue-500 text-white p-2 rounded"
+        className="bg-purple-500 text-white p-2 rounded "
       >
         Go Back
       </button>
-    </>
+    </div>
   );
 }
 
