@@ -1,13 +1,13 @@
 function ContentPage() {
   return (
     <div className="flex flex-col w-full gap-8">
-      <div className="border border-black overflow-y-auto w-4/5 h-[50vh] mx-auto mt-32 p-2 px-4">
+      <div className="border border-black overflow-y-auto w-4/5 h-[50vh] mx-auto mt-32 p-3 px-8">
         <div className="leading-[4] text-justify">
           News is information about current events. This may be provided through
           many different media: word of mouth, printing, postal systems,
           broadcasting, electronic communication, or through the testimony of
-          observers and witnesses to events. News is sometimes called "hard
-          news" to differentiate it from soft media. Common topics for news
+          observers and witnesses to events. News is sometimes called &quot;hard
+          news&quot; to differentiate it from soft media. Common topics for news
           reports include war, government, politics, education, health, the
           environment, economy, business, fashion, entertainment, and sport, as
           well as quirky or unusual events. Government proclamations, concerning
