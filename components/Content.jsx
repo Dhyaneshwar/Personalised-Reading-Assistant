@@ -1,8 +1,12 @@
 function ContentPage() {
   return (
     <div className="flex flex-col w-full gap-8">
-      <div className="border border-black overflow-y-auto w-4/5 h-[50vh] mx-auto mt-32 p-3 px-8">
-        <div className="leading-[4] text-justify">
+      <div className="border border-black overflow-y-auto w-4/5 h-[55vh] mx-auto mt-32 p-3 px-8">
+        <div
+          className="leading-[4] text-justify text-3xl"
+          style={{ wordSpacing: "2rem" }}
+          id="ContentArea"
+        >
           News is information about current events. This may be provided through
           many different media: word of mouth, printing, postal systems,
           broadcasting, electronic communication, or through the testimony of
