@@ -19,7 +19,7 @@ function CalibratePage() {
     if (webgazer) {
       initialWebgazerSetup(webgazer, options);
     } else {
-      initializeWebGazer(() => {}, options);
+      initializeWebGazer(options);
     }
     return () => {
       if (window.webgazer) {
