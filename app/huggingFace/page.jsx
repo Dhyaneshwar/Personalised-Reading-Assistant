@@ -7,7 +7,7 @@ const HuggingFacePage = () => {
   const [content, setContent] = useState("");
 
   const getSummaryHandler = async () => {
-    const response = await fetch("/api/huggingface", {
+    const response = await fetch("/api/huggingface/textGenerator", {
       method: "post",
       body: JSON.stringify({
         prompt: inputRef.current.value,
