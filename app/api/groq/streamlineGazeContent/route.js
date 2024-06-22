@@ -19,7 +19,7 @@ async function streamlineGazeContentHandler(prompt) {
     {
       role: "system",
       content:
-        "Eliminate redundancy and enhance coherence in the paragraph without introducing new content. Provide only the revised text without any introductory phrases.",
+        "Eliminate redundancy and enhance coherence in the paragraph without introducing new content. Respond in JSON format with only the revised text, e.g., {gazeContent: '...'}",
     },
     { role: "user", content: prompt },
   ];

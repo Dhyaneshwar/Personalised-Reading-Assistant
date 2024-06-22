@@ -19,7 +19,7 @@ async function summaryGenerationHandler(prompt) {
     {
       role: "system",
       content:
-        "Summarize the following paragraph in a clear and concise manner, making it easy to understand while retaining the key points.",
+        "Provide a clear and concise summary of the following paragraph, ensuring it retains the key points. Respond in JSON format with only the summary text, e.g., {summary: '...'}",
     },
     { role: "user", content: prompt },
   ];
