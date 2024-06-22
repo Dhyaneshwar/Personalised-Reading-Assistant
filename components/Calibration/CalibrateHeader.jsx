@@ -6,7 +6,7 @@ import {
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
-function CalibratePage() {
+function CalibrateHeader() {
   const router = useRouter();
 
   const handleBack = () => {
@@ -44,4 +44,4 @@ function CalibratePage() {
   );
 }
 
-export default CalibratePage;
+export default CalibrateHeader;

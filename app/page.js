@@ -1,5 +1,4 @@
 import React from "react";
-import EyeTracker from "@/components/EyeTracker";
 import Link from "next/link";
 
 function HomePage() {
@@ -8,6 +7,9 @@ function HomePage() {
       <span>Welcome to Our app</span>
       <Link href="/gazer" className="underline">
         Navigate to Gazer
+      </Link>
+      <Link href="/calibrate" className="underline">
+        Navigate to Calibrate
       </Link>
     </div>
   );

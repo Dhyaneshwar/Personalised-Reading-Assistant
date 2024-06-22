@@ -14,12 +14,12 @@ const llama_70b = "llama3-70b-8192";
 const llama_8b = "llama3-8b-8192";
 const model = llama_70b;
 
-async function textGenerationHandler(prompt) {
+async function summaryGenerationHandler(prompt) {
   const messages = [
     {
       role: "system",
       content:
-        "The paragraph contains redundancy and lacks coherence. Eliminate repetitive phrases while improving clarity and coherence without adding any new content. Do not include any introductory phrases in the response. Respond only with the revised version of the text.",
+        "Summarize the following paragraph in a clear and concise manner, making it easy to understand while retaining the key points.",
     },
     { role: "user", content: prompt },
   ];
@@ -40,6 +40,6 @@ async function textGenerationHandler(prompt) {
 
 export async function POST(req) {
   const body = await req.json();
-  const response = await textGenerationHandler(body.prompt);
+  const response = await summaryGenerationHandler(body.prompt);
   return NextResponse.json(response, { status: 200 });
 }

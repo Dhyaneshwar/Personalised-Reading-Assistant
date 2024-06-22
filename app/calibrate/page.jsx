@@ -1,11 +1,11 @@
 import React from "react";
-import CalibratePage from "@/components/Calibration";
-import CalibrationPointsPage from "@/components/CalibrationPoints";
+import CalibrateHeader from "@/components/Calibration/CalibrateHeader";
+import CalibrationPointsPage from "@/components/Calibration/CalibrationPoints";
 
 function CalibrationPage() {
   return (
     <>
-      <CalibratePage />
+      <CalibrateHeader />
       <CalibrationPointsPage />
     </>
   );
