@@ -15,7 +15,7 @@ function ContentPage() {
             through many different media: word of mouth, printing, postal
             systems, broadcasting, electronic communication, or through the
             testimony of observers and witnesses to events. News is sometimes
-            called &quot;hard news&quot; to differentiate it from soft media.
+            called &apos;hard news&apos; to differentiate it from soft media.
             Common topics for news reports include war, government, politics,
             education, health, the environment, economy, business, fashion,
             entertainment, and sport, as well as quirky or unusual events.
