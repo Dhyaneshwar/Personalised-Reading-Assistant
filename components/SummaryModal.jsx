@@ -14,12 +14,12 @@ export default function SummaryModal() {
 
   useEffect(() => {
     const { webgazer } = window || {};
-    const words = webgazer?.wordAtPixel;
+    const words = webgazer?.wordAtPixel || [];
+    const extractedContent = words.join(" ");
+    const originalText = document.getElementById("ContentArea").textContent;
 
-    setResponse({
-      extractedContent: _.isEmpty(words)
-        ? "No Content to display"
-        : words.join(" "),
+    const res = {
+      extractedContent: extractedContent || "No Content to display",
       summaryData:
         "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta laudantium repellat non vitae iusto aliquam, unde nulla quibusdam eaque deleniti tempora ipsum in ex aliquid alias ea necessitatibus dolores maxime. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi nulla ipsum saepe, harum quisquam ut excepturi? Iusto, placeat, eos repellat nobis tempora eligendi aut, impedit minima mollitia dolorem fuga saepe. Iusto, placeat, eos repellat nobis tempora eligendi aut, impedit minima mollitia dolorem fuga saepe.",
       definitions: {
@@ -48,7 +48,8 @@ export default function SummaryModal() {
             "to give evidence or testimony, especially in a court of law",
         },
       },
-    });
+    };
+    setResponse(res);
   }, [isOpen]);
 
   const handleOpen = () => {
