@@ -1,65 +1,69 @@
 "use client";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
+import { Modal, Box } from "@mui/material";
 import { ArrowDropDown, ArrowDropUp } from "@mui/icons-material";
-import Modal from "@mui/material/Modal";
-import { useEffect, useState } from "react";
-import { btnClasses, headerClasses, style } from "@/utils/modalStyles";
-import _ from "lodash";
+import { useEffect, useMemo, useState } from "react";
+import { headerClasses, style } from "@/utils/modalStyles";
 
-export default function SummaryModal() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [response, setResponse] = useState({});
+export default function SummaryModal({ isOpen, handleClose }) {
+  const initialResponse = useMemo(
+    () => ({
+      extractedContent:
+        "Please read the displayed content to generate some summary",
+      summaryData: "",
+      definitions: { number_of_definitions: 0 },
+    }),
+    []
+  );
+  const [response, setResponse] = useState(initialResponse);
   const [toggleLinesRead, setToggleLinesRead] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const { webgazer } = window || {};
-    const words = webgazer?.wordAtPixel || [];
-    const extractedContent = words.join(" ");
-    const originalText = document.getElementById("ContentArea").textContent;
+    const fetchSummary = async (prompt) => {
+      try {
+        const resp = await fetch("/api/assitant/summary", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(prompt),
+        });
 
-    const res = {
-      extractedContent: extractedContent || "No Content to display",
-      summaryData:
-        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta laudantium repellat non vitae iusto aliquam, unde nulla quibusdam eaque deleniti tempora ipsum in ex aliquid alias ea necessitatibus dolores maxime. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi nulla ipsum saepe, harum quisquam ut excepturi? Iusto, placeat, eos repellat nobis tempora eligendi aut, impedit minima mollitia dolorem fuga saepe. Iusto, placeat, eos repellat nobis tempora eligendi aut, impedit minima mollitia dolorem fuga saepe.",
-      definitions: {
-        number_of_definitions: 5,
-        definition1: {
-          word: "testimony",
-          definition: "a formal statement testifying to a fact or event",
-        },
-        definition2: {
-          word: "broadcasting",
-          definition:
-            "the act of transmitting audio or video content to a wide audience via radio, television, or internet",
-        },
-        definition3: {
-          word: "environment",
-          definition:
-            "the natural world, including land, water, air, plants, and living things",
-        },
-        definition4: {
-          word: "quirky",
-          definition: "unconventional or unexpected in a humorous way",
-        },
-        definition5: {
-          word: "testifying",
-          definition:
-            "to give evidence or testimony, especially in a court of law",
-        },
-      },
+        if (!resp.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        const dataSummary = await resp.json();
+        return dataSummary;
+      } catch (error) {
+        console.error("Failed to fetch summary:", error);
+        return null;
+      }
     };
-    setResponse(res);
-  }, [isOpen]);
 
-  const handleOpen = () => {
-    setIsOpen(true);
-  };
+    const fetchAndSetSummary = async () => {
+      setIsLoading(true);
+      const { webgazer } = window || {};
+      const words = webgazer?.wordAtPixel || [];
+      if (words.length > 30) {
+        const gazeContent = words.join(" ");
+        const originalContent =
+          document.getElementById("ContentArea")?.textContent || "";
 
-  const handleClose = () => setIsOpen(false);
+        const data = await fetchSummary({ originalContent, gazeContent });
+        console.log("Summary data:", data);
+        setResponse(data);
+      } else {
+        setResponse(initialResponse);
+      }
+      setIsLoading(false);
+    };
+
+    fetchAndSetSummary();
+  }, [initialResponse]);
 
   const extractDefinition = (definitions) => {
-    const { number_of_definitions, ...rest } = definitions;
+    const { number_of_definitions, ...rest } = definitions || {};
     return Object.values(rest).map((define, index) => (
       <li key={index}>
         <span className="capitalize">{define.word}:- </span>
@@ -68,36 +72,53 @@ export default function SummaryModal() {
     ));
   };
 
+  if (isLoading) {
+    return (
+      <Modal open={isLoading}>
+        <Box style={style}>
+          <h1 className={headerClasses} style={{ top: "-25px" }}>
+            Summary & Definition is Loading
+          </h1>
+          <p className="text-center">
+            Please wait... The summary and definition is getting generated!!!
+          </p>
+        </Box>
+      </Modal>
+    );
+  }
+
   return (
     <>
-      {isOpen && (
-        <Modal open={isOpen} onClose={handleClose}>
-          <Box style={style}>
-            <h1 className={headerClasses} style={{ top: "-25px" }}>
-              Summary
-            </h1>
-            <div className="Extracted_Gaze_Content">
-              <div
-                className="cursor-pointer flex items-center"
-                onClick={() => {
-                  setToggleLinesRead((prevState) => !prevState);
-                }}
-              >
-                {toggleLinesRead ? (
-                  <ArrowDropDown className="ml-[-24px]" />
-                ) : (
-                  <ArrowDropUp className="ml-[-24px]" />
-                )}
-                <h3 className="font-semibold inline-block">Lines Read:</h3>
-              </div>
-              {toggleLinesRead && (
-                <p className="text-justify">{response.extractedContent}</p>
+      <Modal open={isOpen} onClose={handleClose}>
+        <Box style={style}>
+          <h1 className={headerClasses} style={{ top: "-25px" }}>
+            Summary
+          </h1>
+          <div className="Extracted_Gaze_Content">
+            <div
+              className="cursor-pointer flex items-center"
+              onClick={() => {
+                setToggleLinesRead((prevState) => !prevState);
+              }}
+            >
+              {toggleLinesRead ? (
+                <ArrowDropDown className="ml-[-24px]" />
+              ) : (
+                <ArrowDropUp className="ml-[-24px]" />
               )}
+              <h3 className="font-semibold inline-block">Lines Read:</h3>
             </div>
+            {toggleLinesRead && (
+              <p className="text-justify">{response?.extractedContent}</p>
+            )}
+          </div>
+          {response.summaryData && (
             <div className="Summary_Container mt-10">
               <h3 className="font-semibold inline-block">Brief Summary:</h3>
               <p className="text-justify">{response.summaryData}</p>
             </div>
+          )}
+          {response.definitions.number_of_definitions > 0 && (
             <div className="Definition_Container mt-10">
               <h3 className="font-semibold inline-block">
                 Definitions for Important/Complicated Words:
@@ -108,13 +129,9 @@ export default function SummaryModal() {
                 </ul>
               </p>
             </div>
-          </Box>
-        </Modal>
-      )}
-
-      <Button className={btnClasses} onClick={handleOpen}>
-        Generate Summary
-      </Button>
+          )}
+        </Box>
+      </Modal>
     </>
   );
 }

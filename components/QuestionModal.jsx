@@ -1,54 +1,71 @@
 "use client";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
+import { Modal, Box } from "@mui/material";
 import { ArrowDropDown, ArrowDropUp } from "@mui/icons-material";
-import Modal from "@mui/material/Modal";
-import { useEffect, useState } from "react";
-import { btnClasses, headerClasses, style } from "@/utils/modalStyles";
+import { useEffect, useMemo, useState } from "react";
+import { headerClasses, style } from "@/utils/modalStyles";
 
-export default function QuestionModal() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [response, setResponse] = useState({});
+export default function QuestionModal({ isOpen, handleClose }) {
+  const initialResponse = useMemo(
+    () => ({
+      extractedContent:
+        "Please read the displayed content to generate some question",
+      questions: { numOfQues: 0 },
+    }),
+    []
+  );
+  const [response, setResponse] = useState(initialResponse);
+  const [isLoading, setIsLoading] = useState(false);
+
   const [toggleLinesRead, setToggleLinesRead] = useState(true);
   const [visibleAnswers, setVisibleAnswers] = useState([]);
 
   useEffect(() => {
-    const { webgazer } = window || {};
-    const words = webgazer?.wordAtPixel || [];
-    const extractedContent = words.join(" ");
-    const originalText = document.getElementById("ContentArea").textContent;
+    const fetchQuestion = async (prompt) => {
+      try {
+        const resp = await fetch("/api/assitant/question", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(prompt),
+        });
 
-    const res = {
-      extractedContent: extractedContent || "No Content to display",
-      questions: {
-        numOfQues: 4,
-        q1: {
-          ques: "What is news?",
-          ans: "News is information about current events.",
-        },
-        q2: {
-          ques: "Through what media can news be provided?",
-          ans: "Word of mouth, printing, postal systems, broadcasting, electronic communication, or through the testimony of observers and witnesses to events.",
-        },
-        q3: {
-          ques: "What is 'hard news'?",
-          ans: "Hard news is a term used to differentiate news from soft media.",
-        },
-        q4: {
-          ques: "What are some common topics for news reports?",
-          ans: "War, government, politics, education, health, the environment, economy, business, fashion, entertainment, and sport, as well as quirky or unusual events.",
-        },
-      },
+        if (!resp.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        const dataQuestion = await resp.json();
+        return dataQuestion;
+      } catch (error) {
+        console.error("Failed to fetch question:", error);
+        return null;
+      }
     };
-    setResponse(res);
-    setVisibleAnswers(new Array(res.questions.numOfQues).fill(false));
-  }, [isOpen]);
 
-  const handleOpen = () => {
-    setIsOpen(true);
-  };
+    const fetchAndSetQuestion = async () => {
+      setIsLoading(true);
+      const { webgazer } = window || {};
+      const words = webgazer?.wordAtPixel || [];
+      if (words.length > 30) {
+        const gazeContent = words.join(" ");
+        const originalContent =
+          document.getElementById("ContentArea")?.textContent || "";
 
-  const handleClose = () => setIsOpen(false);
+        const data = await fetchQuestion({ originalContent, gazeContent });
+        console.log("Question data:", data);
+        setResponse(data);
+        setVisibleAnswers(new Array(data.questions.numOfQues).fill(false));
+      } else {
+        setResponse(initialResponse);
+        setVisibleAnswers(
+          new Array(initialResponse.questions.numOfQues).fill(false)
+        );
+      }
+      setIsLoading(false);
+    };
+
+    fetchAndSetQuestion();
+  }, [initialResponse]);
 
   const toggleAnswerVisibility = (index) => {
     setVisibleAnswers((prevVisibleAnswers) =>
@@ -64,7 +81,7 @@ export default function QuestionModal() {
   };
 
   const extractQuestion = (questions) => {
-    const { numOfQues, ...rest } = questions;
+    const { numOfQues, ...rest } = questions || {};
     return Object.values(rest).map((question, index) => (
       <>
         <h3 className="font-bold text-xl mt-2">Questions {index + 1}: </h3>
@@ -87,51 +104,64 @@ export default function QuestionModal() {
     ));
   };
 
+  if (isLoading) {
+    return (
+      <Modal open={isLoading}>
+        <Box style={style}>
+          <h1 className={headerClasses} style={{ top: "-25px" }}>
+            Questions are Loading
+          </h1>
+          <p className="text-center">
+            Please wait... The questions are getting generated!!!
+          </p>
+        </Box>
+      </Modal>
+    );
+  }
+
   return (
     <>
-      {isOpen && (
-        <Modal open={isOpen} onClose={handleClose}>
-          <Box style={style}>
-            <h1 className={headerClasses} style={{ top: "-25px" }}>
-              Question
-            </h1>
-            <div className="Extracted_Gaze_Content">
-              <div
-                className="cursor-pointer flex items-center"
-                onClick={() => {
-                  setToggleLinesRead((prevState) => !prevState);
-                }}
-              >
-                {toggleLinesRead ? (
-                  <ArrowDropDown className="ml-[-24px]" />
-                ) : (
-                  <ArrowDropUp className="ml-[-24px]" />
-                )}
-                <h3 className="font-semibold inline-block">Lines Read:</h3>
-              </div>
-              {toggleLinesRead && (
-                <p className="text-justify">{response.extractedContent}</p>
+      <Modal open={isOpen} onClose={handleClose}>
+        <Box style={style}>
+          <h1 className={headerClasses} style={{ top: "-25px" }}>
+            Question
+          </h1>
+          <div className="Extracted_Gaze_Content">
+            <div
+              className="cursor-pointer flex items-center"
+              onClick={() => {
+                setToggleLinesRead((prevState) => !prevState);
+              }}
+            >
+              {toggleLinesRead ? (
+                <ArrowDropDown className="ml-[-24px]" />
+              ) : (
+                <ArrowDropUp className="ml-[-24px]" />
               )}
+              <h3 className="font-semibold inline-block">Lines Read:</h3>
             </div>
-            <div className="Question_Container mt-10 text-justify">
-              {extractQuestion(response.questions)}
-            </div>
+            {toggleLinesRead && (
+              <p className="text-justify">{response.extractedContent}</p>
+            )}
+          </div>
+          {response.questions.numOfQues > 0 && (
+            <>
+              <div className="Question_Container mt-10 text-justify">
+                {extractQuestion(response.questions)}
+              </div>
 
-            <div className="Show_All_Button text-justify flex justify-center">
-              <button
-                className="p-1 rounded-lg bg-slate-400 border border-black capitalize w-40 h-10 "
-                onClick={toggleAllAnswerVisibility}
-              >
-                {visibleAnswers.every((v) => v) ? "hide" : "show"} all
-              </button>
-            </div>
-          </Box>
-        </Modal>
-      )}
-
-      <Button className={btnClasses} onClick={handleOpen}>
-        Generate Question
-      </Button>
+              <div className="Show_All_Button text-justify flex justify-center">
+                <button
+                  className="p-1 rounded-lg bg-slate-400 border border-black capitalize w-40 h-10 "
+                  onClick={toggleAllAnswerVisibility}
+                >
+                  {visibleAnswers.every((v) => v) ? "hide" : "show"} all
+                </button>
+              </div>
+            </>
+          )}
+        </Box>
+      </Modal>
     </>
   );
 }

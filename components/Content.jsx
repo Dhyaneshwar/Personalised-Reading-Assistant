@@ -1,9 +1,34 @@
+"use client";
+import { useState } from "react";
 import QuestionModal from "./QuestionModal";
 import SummaryModal from "./SummaryModal";
+import { Button } from "@mui/material";
+import { btnClasses } from "@/utils/modalStyles";
 
 function ContentPage() {
+  const [isSummaryOpen, setIsSummaryOpen] = useState(false);
+  const [isQuestionOpen, setIsQuestionOpen] = useState(false);
+
+  const handleSummaryOpen = () => setIsSummaryOpen(true);
+
+  const handleSummaryClose = () => setIsSummaryOpen(false);
+
+  const handleQuestionOpen = () => setIsQuestionOpen(true);
+
+  const handleQuestionClose = () => setIsQuestionOpen(false);
+
   return (
     <>
+      {isSummaryOpen && (
+        <SummaryModal isOpen={isSummaryOpen} handleClose={handleSummaryClose} />
+      )}
+      {isQuestionOpen && (
+        <QuestionModal
+          isOpen={isQuestionOpen}
+          handleClose={handleQuestionClose}
+        />
+      )}
+
       <div className="flex flex-col w-full gap-8">
         <div className="border border-black overflow-y-auto w-4/5 h-[55vh] mx-auto mt-32 p-3 px-8">
           <div
@@ -33,8 +58,18 @@ function ContentPage() {
           </div>
         </div>
         <div className="flex gap-14 justify-center">
-          <SummaryModal />
-          <QuestionModal />
+          <Button
+            className="border border-slate-600 bg-slate-400 p-3 rounded-xl text-black"
+            onClick={handleSummaryOpen}
+          >
+            Generate Summary
+          </Button>
+          <Button
+            className="border border-slate-600 bg-slate-400 p-3 rounded-xl text-black"
+            onClick={handleQuestionOpen}
+          >
+            Generate Question
+          </Button>
         </div>
       </div>
     </>

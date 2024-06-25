@@ -1,6 +1,3 @@
-export const btnClasses =
-  "border border-slate-600 bg-slate-400 p-3 rounded-xl text-black";
-
 export const headerClasses =
   "mb-3 text-3xl font-semibold text-center sticky mt-[-25px] ml-[-50px] w-[110%] bg-white p-4";
 
