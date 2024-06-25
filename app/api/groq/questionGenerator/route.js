@@ -19,7 +19,7 @@ export async function questionGenerationHandler(prompt) {
     {
       role: "system",
       content:
-        'Generate 3-5 questions and corresponding answers based on the following paragraph to help validate understanding of the content. Respond in JSON format with the number of questions generated and each question as an object, e.g., {"numOfQues": total_ques_count, "q1": {"ques": "...", "ans": "..."}, "q2": {"ques": "...", "ans": "..."}...}',
+        'Generate 3-5 questions and corresponding answers based on the following paragraph to help validate understanding of the content. Respond in only JSON format with the number of questions generated and each question as an object, e.g., {"numOfQues": total_ques_count, "q1": {"ques": "...", "ans": "..."}, "q2": {"ques": "...", "ans": "..."}...}',
     },
     { role: "user", content: prompt },
   ];
