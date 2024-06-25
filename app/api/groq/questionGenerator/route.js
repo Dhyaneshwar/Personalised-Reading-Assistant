@@ -14,12 +14,12 @@ const llama_70b = "llama3-70b-8192";
 const llama_8b = "llama3-8b-8192";
 const model = llama_70b;
 
-async function questionGenerationHandler(prompt) {
+export async function questionGenerationHandler(prompt) {
   const messages = [
     {
       role: "system",
       content:
-        "Generate 3-5 questions and corresponding answers based on the following paragraph to help validate understanding of the content. Respond in JSON format with the number of questions generated and each question as an object, e.g., {numOfQues: total_ques_count, q1: {ques: '...', ans: '...'}, q2: {ques: '...', ans: '...'}...}",
+        'Generate 3-5 questions and corresponding answers based on the following paragraph to help validate understanding of the content. Respond in JSON format with the number of questions generated and each question as an object, e.g., {"numOfQues": total_ques_count, "q1": {"ques": "...", "ans": "..."}, "q2": {"ques": "...", "ans": "..."}...}',
     },
     { role: "user", content: prompt },
   ];
@@ -31,7 +31,6 @@ async function questionGenerationHandler(prompt) {
       temperature: 1,
       max_tokens: 8192,
     });
-    console.log(response.choices[0].message);
     return response.choices[0]?.message?.content;
   } catch (error) {
     console.error("Error generating text:", error);

@@ -26,7 +26,6 @@ async function textGenerationHandler(prompt) {
       max_length: 4096,
       temperature: 1,
     });
-    console.log(response.choices[0].message);
     return response.choices[0]?.message?.content;
   } catch (error) {
     console.error("Error generating text:", error);

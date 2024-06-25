@@ -22,7 +22,6 @@ async function imageToTextConverter() {
       data: imgBlog,
       model: imgToTextModel,
     });
-    console.log(response);
     return response.generated_text;
   } catch (error) {
     console.error("Error during image to text conversion:", error);

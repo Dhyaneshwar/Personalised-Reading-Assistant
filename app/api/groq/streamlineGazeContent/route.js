@@ -14,12 +14,12 @@ const llama_70b = "llama3-70b-8192";
 const llama_8b = "llama3-8b-8192";
 const model = llama_70b;
 
-async function streamlineGazeContentHandler(prompt) {
+export async function streamlineGazeContentHandler(prompt) {
   const messages = [
     {
       role: "system",
       content:
-        "Eliminate redundancy and enhance coherence in the paragraph without introducing new content. Respond in JSON format with only the revised text, e.g., {gazeContent: '...'}",
+        'Eliminate redundancy and enhance coherence in the paragraph without introducing new content. Respond in JSON format with only the revised text, e.g., {"gazeContent": "..." }',
     },
     { role: "user", content: prompt },
   ];
@@ -31,7 +31,6 @@ async function streamlineGazeContentHandler(prompt) {
       temperature: 1,
       max_tokens: 8192,
     });
-    console.log(response.choices[0].message);
     return response.choices[0]?.message?.content;
   } catch (error) {
     console.error("Error generating text:", error);
