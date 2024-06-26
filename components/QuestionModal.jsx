@@ -52,9 +52,9 @@ export default function QuestionModal({ isOpen, handleClose }) {
           document.getElementById("ContentArea")?.textContent || "";
 
         const data = await fetchQuestion({ originalContent, gazeContent });
-        console.log("Question data:", data);
         setResponse(data);
         setVisibleAnswers(new Array(data.questions.numOfQues).fill(false));
+        webgazer.wordAtPixel = data.extractedContent.split();
       } else {
         setResponse(initialResponse);
         setVisibleAnswers(

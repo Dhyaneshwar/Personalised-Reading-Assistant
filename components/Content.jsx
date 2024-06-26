@@ -2,12 +2,15 @@
 import { useState } from "react";
 import QuestionModal from "./QuestionModal";
 import SummaryModal from "./SummaryModal";
-import { Button } from "@mui/material";
-import { btnClasses } from "@/utils/modalStyles";
 
 function ContentPage() {
   const [isSummaryOpen, setIsSummaryOpen] = useState(false);
   const [isQuestionOpen, setIsQuestionOpen] = useState(false);
+
+  const clearGazeData = () => {
+    const { webgazer } = window || {};
+    webgazer.wordAtPixel = [];
+  };
 
   const handleSummaryOpen = () => setIsSummaryOpen(true);
 
@@ -58,18 +61,24 @@ function ContentPage() {
           </div>
         </div>
         <div className="flex gap-14 justify-center">
-          <Button
+          <button
+            className="border border-slate-600 bg-slate-400 p-3 rounded-xl text-black"
+            onClick={clearGazeData}
+          >
+            Clear Gaze Data
+          </button>
+          <button
             className="border border-slate-600 bg-slate-400 p-3 rounded-xl text-black"
             onClick={handleSummaryOpen}
           >
             Generate Summary
-          </Button>
-          <Button
+          </button>
+          <button
             className="border border-slate-600 bg-slate-400 p-3 rounded-xl text-black"
             onClick={handleQuestionOpen}
           >
             Generate Question
-          </Button>
+          </button>
         </div>
       </div>
     </>

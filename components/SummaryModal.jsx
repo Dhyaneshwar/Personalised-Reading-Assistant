@@ -51,8 +51,8 @@ export default function SummaryModal({ isOpen, handleClose }) {
           document.getElementById("ContentArea")?.textContent || "";
 
         const data = await fetchSummary({ originalContent, gazeContent });
-        console.log("Summary data:", data);
         setResponse(data);
+        webgazer.wordAtPixel = data.extractedContent.split();
       } else {
         setResponse(initialResponse);
       }
