@@ -21,7 +21,7 @@ export default function SummaryModal({ isOpen, handleClose }) {
   useEffect(() => {
     const fetchSummary = async (prompt) => {
       try {
-        const resp = await fetch("/api/assitant/summary", {
+        const resp = await fetch("/api/assistant/summary", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

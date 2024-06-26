@@ -22,7 +22,7 @@ export default function QuestionModal({ isOpen, handleClose }) {
   useEffect(() => {
     const fetchQuestion = async (prompt) => {
       try {
-        const resp = await fetch("/api/assitant/question", {
+        const resp = await fetch("/api/assistant/question", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
