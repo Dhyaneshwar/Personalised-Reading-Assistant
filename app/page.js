@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import { topics } from "@/lib/data";
 
 function HomePage() {
   return (
@@ -11,6 +12,16 @@ function HomePage() {
       <Link href="/calibrate" className="underline">
         Navigate to Calibrate
       </Link>
+      <ul className="m-5 list-disc text-left">
+        Navigate to
+        {topics.map((topic) => (
+          <li key={topic.id} className="ml-5">
+            <Link href={`/${topic.id}`} className="underline">
+              {topic.title}
+            </Link>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }

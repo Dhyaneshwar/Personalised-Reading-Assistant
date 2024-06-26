@@ -3,7 +3,7 @@ import { useState } from "react";
 import QuestionModal from "./QuestionModal";
 import SummaryModal from "./SummaryModal";
 
-function ContentPage() {
+function ContentPage({ content }) {
   const [isSummaryOpen, setIsSummaryOpen] = useState(false);
   const [isQuestionOpen, setIsQuestionOpen] = useState(false);
 
@@ -39,7 +39,8 @@ function ContentPage() {
             style={{ wordSpacing: "2rem" }}
             id="ContentArea"
           >
-            News is information about current events. This may be provided
+            {content ||
+              `News is information about current events. This may be provided
             through many different media: word of mouth, printing, postal
             systems, broadcasting, electronic communication, or through the
             testimony of observers and witnesses to events. News is sometimes
@@ -57,7 +58,7 @@ function ContentPage() {
             became established in Europe during the early modern period. In the
             20th century, radio and television became an important means of
             transmitting news. Whilst in the 21st, the internet has also begun
-            to play a similar role.
+            to play a similar role.`}
           </div>
         </div>
         <div className="flex gap-14 justify-center">
