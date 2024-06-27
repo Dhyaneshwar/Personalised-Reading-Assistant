@@ -5,6 +5,8 @@ import {
 } from "@/lib/webgazerHandler";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import Image from "next/image";
 
 function CalibrateHeader() {
   const router = useRouter();
@@ -23,23 +25,39 @@ function CalibrateHeader() {
     }
     return () => {
       if (window.webgazer) {
-        window.webgazer?.stopVideo();
-        window.webgazer?.end();
+        try {
+          window.webgazer?.stopVideo();
+          window.webgazer?.end();
+        } catch (e) {
+          console.log(e);
+        }
       }
     };
   });
 
   return (
-    <div className="flex justify-around items-center bg-stone-600 mb-4 text-center font-medium p-2">
-      <div className="text-white ml-12 flex-grow-[1] text-4xl">
-        Calibrate Page
+    <div
+      className="w-full bg-amber-600 border border-black flex justify-between items-center sticky"
+      style={{ top: 0 }}
+    >
+      <div className="Icon_Container border-r-2 border-blue-900 inline-flex p-3">
+        <Link href="/">
+          <Image
+            src="/icon.png"
+            width={35}
+            height={35}
+            alt="Picture of the author"
+          />
+        </Link>
       </div>
-      <button
-        onClick={handleBack}
-        className="bg-purple-500 text-white p-2 rounded "
-      >
-        Go Back
-      </button>
+      <div className="Heading_Container">
+        <h1 className="text-4xl font-semibold">Calibration Page</h1>
+      </div>
+      <div className="border-l-2 border-blue-900 inline-flex items-center h-[59px] p-3">
+        <button onClick={handleBack} className="text-white">
+          Go Back
+        </button>
+      </div>
     </div>
   );
 }

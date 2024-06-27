@@ -1,6 +1,3 @@
-export const headerClasses =
-  "mb-3 text-3xl font-semibold text-center sticky mt-[-25px] ml-[-50px] w-[110%] bg-white p-4";
-
 export const style = {
   position: "absolute",
   top: "50%",

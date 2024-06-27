@@ -2,7 +2,7 @@
 import { Modal, Box } from "@mui/material";
 import { ArrowDropDown, ArrowDropUp } from "@mui/icons-material";
 import { useEffect, useMemo, useState } from "react";
-import { headerClasses, style } from "@/utils/modalStyles";
+import { style } from "@/utils/modalStyles";
 
 export default function QuestionModal({ isOpen, handleClose }) {
   const initialResponse = useMemo(
@@ -108,7 +108,10 @@ export default function QuestionModal({ isOpen, handleClose }) {
     return (
       <Modal open={isLoading}>
         <Box style={style}>
-          <h1 className={headerClasses} style={{ top: "-25px" }}>
+          <h1
+            className="mb-3 text-3xl font-semibold text-center sticky mt-[-25px] ml-[-50px] w-[110%] bg-white p-4"
+            style={{ top: "-25px" }}
+          >
             Questions are Loading
           </h1>
           <p className="text-center">
@@ -123,7 +126,10 @@ export default function QuestionModal({ isOpen, handleClose }) {
     <>
       <Modal open={isOpen} onClose={handleClose}>
         <Box style={style}>
-          <h1 className={headerClasses} style={{ top: "-25px" }}>
+          <h1
+            className="mb-3 text-3xl font-semibold text-center sticky mt-[-25px] ml-[-50px] w-[110%] bg-white p-4"
+            style={{ top: "-25px" }}
+          >
             Question
           </h1>
           <div className="Extracted_Gaze_Content">

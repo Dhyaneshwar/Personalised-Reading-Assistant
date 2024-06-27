@@ -22,8 +22,12 @@ export default function EyeTracker() {
 
     return () => {
       if (window.webgazer) {
-        window.webgazer?.stopVideo();
-        window.webgazer?.end();
+        try {
+          window.webgazer?.stopVideo();
+          window.webgazer?.end();
+        } catch (error) {
+          console.log(error);
+        }
       }
     };
   }, []);
@@ -31,16 +35,20 @@ export default function EyeTracker() {
   const handleWebgazerState = () => {
     const { webgazer } = window;
     setEnableWebgazer((prevState) => {
-      if (prevState) {
-        handleVideo(webgazer, false);
-        document.getElementById("webgazerVideoContainer").remove();
-        document.getElementById("webgazerGazeDot").remove();
-        webgazer.showPredictionPoints(false);
-        webgazer.stopVideo();
-      } else {
-        webgazer.begin();
-        handleVideo(webgazer, true);
-        webgazer.showPredictionPoints(true);
+      try {
+        if (prevState) {
+          handleVideo(webgazer, false);
+          document.getElementById("webgazerVideoContainer").remove();
+          document.getElementById("webgazerGazeDot").remove();
+          webgazer.showPredictionPoints(false);
+          webgazer.stopVideo();
+        } else {
+          webgazer.begin();
+          handleVideo(webgazer, true);
+          webgazer.showPredictionPoints(true);
+        }
+      } catch (e) {
+        console.log(e);
       }
       return !prevState;
     });
@@ -64,20 +72,7 @@ export default function EyeTracker() {
 
   return (
     <div className="flex justify-evenly align-middle">
-      <div className="text-center m-5 ml-[6rem] p-8">News Contents</div>
       <div className="flex align-middle">
-        {!enableWebgazer ? (
-          <span className="cursor-not-allowed bg-slate-100 text-zinc-500 m-6 p-2 w-32 h-16 rounded-xl flex items-center justify-center">
-            Calibrate
-          </span>
-        ) : (
-          <Link
-            className="bg-slate-400 m-6 p-2 w-32 h-16 rounded-xl flex items-center justify-center"
-            href="/calibrate"
-          >
-            Calibrate
-          </Link>
-        )}
         <button
           className={`${
             enableWebgazer

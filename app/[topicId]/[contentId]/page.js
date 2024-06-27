@@ -1,6 +1,7 @@
 "use client";
 import ContentPage from "@/components/Content";
 import EyeTracker from "@/components/EyeTracker";
+import HeaderBar from "@/components/HeaderBar";
 import { contents } from "@/lib/data";
 import { useParams } from "next/navigation";
 import React from "react";
@@ -10,7 +11,7 @@ function ContentContainer() {
   const { title, content } = contents.find(({ id }) => id === contentId);
   return (
     <>
-      <div className="flex justify-center">{title}</div>
+      <HeaderBar title={title} />
       <EyeTracker />
       <ContentPage content={content} />
     </>

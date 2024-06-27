@@ -33,10 +33,10 @@ function ContentPage({ content }) {
       )}
 
       <div className="flex flex-col w-full gap-8">
-        <div className="border border-black overflow-y-auto w-4/5 h-[55vh] mx-auto mt-32 p-3 px-8">
+        <div className="border border-black overflow-y-auto w-4/5 h-[65vh] mx-auto mt-3 p-3 px-8">
           <div
-            className="leading-[4] text-justify text-3xl"
-            style={{ wordSpacing: "2rem" }}
+            className="leading-[2.5] text-justify text-2xl"
+            style={{ wordSpacing: "1.5rem" }}
             id="ContentArea"
           >
             {content ||
