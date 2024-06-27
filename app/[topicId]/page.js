@@ -2,12 +2,13 @@
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import React from "react";
-import { topics } from "@/lib/data";
+import { contents as allContents, topics } from "@/lib/data";
 import HeaderBar from "@/components/HeaderBar";
 
 function TopicPage() {
   const { topicId } = useParams();
-  const { title, contents = [] } = topics.find(({ id }) => id === topicId);
+  const { title } = topics.find(({ id }) => id === topicId);
+  const contents = allContents.filter((content) => content.topicId === topicId);
   return (
     <>
       <HeaderBar title={title} />
