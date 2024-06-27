@@ -1,5 +1,10 @@
 "use client";
+import {
+  initializeWebGazer,
+  initialWebgazerSetup,
+} from "@/lib/webgazerHandler";
 import React from "react";
+import { useEffect } from "react";
 
 function CalibrationPointsPage() {
   // const points_17 = [
@@ -33,6 +38,26 @@ function CalibrationPointsPage() {
     { id: 8, style: { bottom: "2vw", left: "50vw" }, clickCount: 0 },
     { id: 9, style: { bottom: "2vw", right: "2vw" }, clickCount: 0 },
   ];
+
+  useEffect(() => {
+    const { webgazer } = window;
+    const options = { showVideoPreview: false };
+    if (webgazer) {
+      initialWebgazerSetup(webgazer, options);
+    } else {
+      initializeWebGazer(options);
+    }
+    return () => {
+      if (window.webgazer) {
+        try {
+          window.webgazer?.stopVideo();
+          window.webgazer?.end();
+        } catch (e) {
+          console.log(e);
+        }
+      }
+    };
+  });
 
   const calibrationPoints = points_9;
   const maxCalibrationClicks = 10;
