@@ -2,13 +2,15 @@ import React from "react";
 import Link from "next/link";
 import { topics } from "@/lib/data";
 import HeaderBar from "@/components/HeaderBar";
+import TopicsPage from "@/components/Topics";
 
 function HomePage() {
   return (
     <>
       <HeaderBar />
-      <div className="w-[500px] h-[750px] text-center mx-auto p-5 flex flex-col items-center justify-center">
+      <div className="w-[500px] text-center mx-auto p-5 flex flex-col items-center justify-center">
         <span>Welcome to Our app</span>
+        <TopicsPage />
         <Link href="/gazer" className="underline">
           Navigate to Gazer
         </Link>

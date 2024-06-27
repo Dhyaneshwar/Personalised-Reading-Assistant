@@ -27,7 +27,7 @@ function HeaderBar({ title = "Personalized Reading Assistant" }) {
           />
         </Link>
       </div>
-      <div className="Heading_Container">
+      <div className="Heading_Container text-center">
         <h1 className="text-4xl font-semibold">{title}</h1>
       </div>
       <div className="Calibration_Container border-l-2 border-blue-900 inline-flex items-center h-[59px] p-3">
