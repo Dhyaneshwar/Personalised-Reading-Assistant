@@ -5,6 +5,7 @@ import React from "react";
 import { contents as allContents, topics } from "@/lib/data";
 import HeaderBar from "@/components/HeaderBar";
 import CardContainer from "@/components/CardContainer/CardContainer";
+import AboutPage from "@/components/About";
 
 function TopicPage() {
   const { topicId } = useParams();
@@ -14,7 +15,7 @@ function TopicPage() {
     <>
       <HeaderBar title={title} />
       <div className="w-[95vw] h-[calc(100vh-61px)] text-center mx-auto p-5 bg-slate-100">
-        <p>Welcome to {title}</p>
+        <AboutPage title={title} />
         <CardContainer
           cardTitle="Contents"
           cardContent={contents}

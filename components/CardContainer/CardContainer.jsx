@@ -2,6 +2,7 @@ import React from "react";
 import classes from "./CardContainer.module.css";
 import Link from "next/link";
 import { contents } from "@/lib/data";
+import CardTitle from "./CardTitle";
 
 function CardContainer({ cardTitle, cardContent, pathName = "" }) {
   const getDynamicStyles = (index, img) => {
@@ -40,10 +41,8 @@ function CardContainer({ cardTitle, cardContent, pathName = "" }) {
   };
   return (
     <>
-      <div className={classes.Card_Title}>
-        <span className={classes.Card_Title_Span}>{cardTitle} Available</span>
-      </div>
-      <div className="w-full grid grid-cols-3 auto-rows-auto gap-11">
+      <CardTitle cardTitle={cardTitle + " Available"} />
+      <div className="w-[90%] mx-auto grid grid-cols-3 auto-rows-auto gap-11">
         {cardContent.map(({ id, title, img }, index) => (
           <div className={`${classes.Card}`} key={index}>
             <div className={`${classes.Card_Side} ${classes.Card_Side_Front}`}>
