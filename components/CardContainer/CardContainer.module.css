@@ -1,3 +1,18 @@
+.Card_Title {
+  font-size: 2.5rem;
+  color: green;
+  margin: 10px 0;
+}
+
+.Card_Title_Span {
+  display: inline-block;
+  transition: all 0.25s;
+}
+
+.Card_Title_Span:hover {
+  transform: scale(1.2);
+}
+
 .Card {
   perspective: 150rem;
   -moz-perspective: 150rem;

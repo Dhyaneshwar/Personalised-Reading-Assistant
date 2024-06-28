@@ -40,9 +40,9 @@ function CardContainer({ cardTitle, cardContent, pathName = "" }) {
   };
   return (
     <>
-      <h2 className="text-4xl mb-6 text-left w-full underline underline-offset-8 decoration-double">
-        {cardTitle} Available
-      </h2>
+      <div className={classes.Card_Title}>
+        <span className={classes.Card_Title_Span}>{cardTitle} Available</span>
+      </div>
       <div className="w-full grid grid-cols-3 auto-rows-auto gap-11">
         {cardContent.map(({ id, title, img }, index) => (
           <div className={`${classes.Card}`} key={index}>
