@@ -54,7 +54,7 @@ export default function QuestionModal({ isOpen, handleClose }) {
         const data = await fetchQuestion({ originalContent, gazeContent });
         setResponse(data);
         setVisibleAnswers(new Array(data.questions.numOfQues).fill(false));
-        webgazer.wordAtPixel = data.extractedContent.split();
+        webgazer.wordAtPixel = data.extractedContent.split(" ");
       } else {
         setResponse(initialResponse);
         setVisibleAnswers(

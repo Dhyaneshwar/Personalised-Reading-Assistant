@@ -52,7 +52,7 @@ export default function SummaryModal({ isOpen, handleClose }) {
 
         const data = await fetchSummary({ originalContent, gazeContent });
         setResponse(data);
-        webgazer.wordAtPixel = data.extractedContent.split();
+        webgazer.wordAtPixel = data.extractedContent.split(" ");
       } else {
         setResponse(initialResponse);
       }

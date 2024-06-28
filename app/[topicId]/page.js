@@ -9,13 +9,13 @@ import AboutPage from "@/components/About";
 
 function TopicPage() {
   const { topicId } = useParams();
-  const { title } = topics.find(({ id }) => id === topicId);
+  const { title, paras } = topics.find(({ id }) => id === topicId);
   const contents = allContents.filter((content) => content.topicId === topicId);
   return (
     <>
       <HeaderBar title={title} />
-      <div className="w-[95vw] h-[calc(100vh-61px)] text-center mx-auto p-5 bg-slate-100">
-        <AboutPage title={title} />
+      <div className="w-[95vw] text-center mx-auto p-5 bg-slate-100">
+        <AboutPage title={title} paras={paras} />
         <CardContainer
           cardTitle="Contents"
           cardContent={contents}
