@@ -4,6 +4,7 @@ import Link from "next/link";
 import React from "react";
 import { contents as allContents, topics } from "@/lib/data";
 import HeaderBar from "@/components/HeaderBar";
+import CardContainer from "@/components/CardContainer/CardContainer";
 
 function TopicPage() {
   const { topicId } = useParams();
@@ -12,15 +13,13 @@ function TopicPage() {
   return (
     <>
       <HeaderBar title={title} />
-      <div className="flex justify-center">
-        <ul>
-          Navigate to
-          {contents.map(({ id, title }) => (
-            <li key={id}>
-              <Link href={`/${topicId}/${id}`}>{title}</Link>
-            </li>
-          ))}
-        </ul>
+      <div className="w-[90vw] text-center mx-auto p-5">
+        <p>Welcome to {title}</p>
+        <CardContainer
+          cardTitle="Contents"
+          cardContent={contents}
+          pathName={`/${topicId}`}
+        />
       </div>
     </>
   );

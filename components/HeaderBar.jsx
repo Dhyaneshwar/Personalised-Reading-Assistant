@@ -14,7 +14,7 @@ function HeaderBar({ title = "Personalized Reading Assistant" }) {
 
   return (
     <div
-      className="w-full bg-amber-600 border border-black flex justify-between items-center sticky"
+      className="w-full z-50 bg-amber-600 border border-black flex justify-between items-center sticky"
       style={{ top: 0 }}
     >
       <div className="Icon_Container border-r-2 border-blue-900 inline-flex p-3">
