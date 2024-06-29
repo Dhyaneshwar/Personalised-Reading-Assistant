@@ -75,21 +75,31 @@
   box-decoration-break: clone;
 }
 
-.Card_Cta {
-  color: #fff;
-  text-align: center;
-  width: 90%;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+.Card_Back_Heading {
+  color: white;
+  padding: 1px 5px;
+  font-size: 24px;
+  margin: 20px auto 5px auto;
 }
 
-.Card_Price_Box {
+.Card_Content_Description {
+  overflow: hidden;
+  width: 100%;
+  word-wrap: nowrap;
+  text-overflow: ellipsis;
+  text-align: justify;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+}
+
+.Card_Content_Container {
+  color: #fff;
+  text-align: center;
   padding: 25px;
 }
 
-.Card_Price_Only {
+.Card_Content_List {
   text-transform: uppercase;
   text-overflow: ellipsis;
   text-align: justify;
@@ -142,10 +152,4 @@
 }
 .Btn_White::after {
   background-color: #fff;
-}
-
-.Card_Price_Con {
-  height: 140px;
-  overflow-y: hidden;
-  text-align: justify;
 }

@@ -30,14 +30,16 @@ function CardContainer({ cardTitle, cardContent, pathName = "" }) {
         <ul className="list-disc">
           {con.map((c, index) => (
             <li key={index}>
-              <p className={`${classes.Card_Price_Only}`}>{c.title}</p>
+              <p className={`${classes.Card_Content_List}`}>{c.title}</p>
             </li>
           ))}
         </ul>
       );
     }
     const con = cardContent.find(({ id }) => id === cid);
-    return <p className={`${classes.Card_Price_Con}`}>{con.content}</p>;
+    return (
+      <p className={`${classes.Card_Content_Description}`}>{con.content}</p>
+    );
   };
   return (
     <>
@@ -73,17 +75,16 @@ function CardContainer({ cardTitle, cardContent, pathName = "" }) {
               className={`${classes.Card_Side} ${classes.Card_Side_Back}`}
               style={getDynamicStyles(index)}
             >
-              <div className={`${classes.Card_Cta}`}>
-                <div className={`${classes.Card_Price_Box}`}>
-                  {displayContents(id)}
-                </div>
-                <Link
-                  className={`${classes.Btn} ${classes.Btn_White}`}
-                  href={`${pathName}/${id}`}
-                >
-                  Navigate to {title}
-                </Link>
+              <h3 className={`${classes.Card_Back_Heading}`}>{title}</h3>
+              <div className={`${classes.Card_Content_Container}`}>
+                {displayContents(id)}
               </div>
+              <Link
+                className={`${classes.Btn} ${classes.Btn_White}`}
+                href={`${pathName}/${id}`}
+              >
+                Read More
+              </Link>
             </div>
           </div>
         ))}
