@@ -27,10 +27,10 @@ function CardContainer({ cardTitle, cardContent, pathName = "" }) {
     if (cardTitle === "Topics") {
       const con = contents.filter(({ topicId }) => topicId === cid);
       return (
-        <ul className="list-disc">
+        <ul className="list-disc  list-inside text-justify">
           {con.map((c, index) => (
             <li key={index}>
-              <p className={`${classes.Card_Content_List}`}>{c.title}</p>
+              <span className={`${classes.Card_Content_List}`}>{c.title}</span>
             </li>
           ))}
         </ul>

@@ -91,53 +91,51 @@ export default function SummaryModal({ isOpen, handleClose }) {
   }
 
   return (
-    <>
-      <Modal open={isOpen} onClose={handleClose}>
-        <Box style={style}>
-          <h1
-            className="mb-3 text-3xl font-semibold text-center sticky mt-[-25px] ml-[-50px] w-[110%] bg-white p-4"
-            style={{ top: "-25px" }}
+    <Modal open={isOpen} onClose={handleClose}>
+      <Box style={style}>
+        <h1
+          className="mb-3 text-3xl font-semibold text-center sticky mt-[-25px] ml-[-50px] w-[110%] bg-white p-4"
+          style={{ top: "-25px" }}
+        >
+          Summary
+        </h1>
+        <div className="Extracted_Gaze_Content">
+          <div
+            className="cursor-pointer flex items-center"
+            onClick={() => {
+              setToggleLinesRead((prevState) => !prevState);
+            }}
           >
-            Summary
-          </h1>
-          <div className="Extracted_Gaze_Content">
-            <div
-              className="cursor-pointer flex items-center"
-              onClick={() => {
-                setToggleLinesRead((prevState) => !prevState);
-              }}
-            >
-              {toggleLinesRead ? (
-                <ArrowDropDown className="ml-[-24px]" />
-              ) : (
-                <ArrowDropUp className="ml-[-24px]" />
-              )}
-              <h3 className="font-semibold inline-block">Lines Read:</h3>
-            </div>
-            {toggleLinesRead && (
-              <p className="text-justify">{response?.extractedContent}</p>
+            {toggleLinesRead ? (
+              <ArrowDropDown className="ml-[-24px]" />
+            ) : (
+              <ArrowDropUp className="ml-[-24px]" />
             )}
+            <h3 className="font-semibold inline-block">Lines Read:</h3>
           </div>
-          {response.summaryData && (
-            <div className="Summary_Container mt-10">
-              <h3 className="font-semibold inline-block">Brief Summary:</h3>
-              <p className="text-justify">{response.summaryData}</p>
-            </div>
+          {toggleLinesRead && (
+            <p className="text-justify">{response?.extractedContent}</p>
           )}
-          {response.definitions.number_of_definitions > 0 && (
-            <div className="Definition_Container mt-10">
-              <h3 className="font-semibold inline-block">
-                Definitions for Important/Complicated Words:
-              </h3>
-              <p className="text-justify">
-                <ul className="list-disc">
-                  {extractDefinition(response.definitions)}
-                </ul>
-              </p>
-            </div>
-          )}
-        </Box>
-      </Modal>
-    </>
+        </div>
+        {response.summaryData && (
+          <div className="Summary_Container mt-10">
+            <h3 className="font-semibold inline-block">Brief Summary:</h3>
+            <p className="text-justify">{response.summaryData}</p>
+          </div>
+        )}
+        {response.definitions.number_of_definitions > 0 && (
+          <div className="Definition_Container mt-10">
+            <h3 className="font-semibold inline-block">
+              Definitions for Important/Complicated Words:
+            </h3>
+            <p className="text-justify">
+              <ul className="list-disc  list-inside text-justify">
+                {extractDefinition(response.definitions)}
+              </ul>
+            </p>
+          </div>
+        )}
+      </Box>
+    </Modal>
   );
 }

@@ -1,7 +1,7 @@
 .Card_Title {
   font-size: 2.5rem;
   color: green;
-  margin: 10px 0;
+  margin-bottom: 10px;
 }
 
 .Card_Title_Span {
@@ -152,4 +152,20 @@
 }
 .Btn_White::after {
   background-color: #fff;
+}
+
+.Btn_Green {
+  background-color: #19a12e;
+  color: #fff;
+}
+.Btn_Green::after {
+  background-color: #19a12e;
+}
+
+.Btn_Red {
+  background-color: #f70000;
+  color: #fff;
+}
+.Btn_Red::after {
+  background-color: #f70000;
 }

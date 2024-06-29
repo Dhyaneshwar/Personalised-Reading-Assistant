@@ -6,7 +6,7 @@ function transformExtractContent(extractedSentences) {
 
   for (const prop in extractedSentences) {
     const sentence = extractedSentences[prop];
-    extractedOriginal += sentence.originalLine;
+    extractedOriginal += sentence.originalLine + " ";
   }
   return extractedOriginal;
 }
