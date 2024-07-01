@@ -173,7 +173,7 @@ function collateReadingData({
   actualTotalTimesPerSentence,
   saccadeTotalTimesPerSentence,
 }) {
-  const detailedResults = [];
+  const detailedReport = [];
   const maxTimeWordsPerSentence = [];
   const maxFixationWordsPerSentence = [];
 
@@ -182,7 +182,7 @@ function collateReadingData({
       actualTotalTimesPerSentence[sentenceIndex].cumulativeTotalTime;
 
     words.forEach((wordData) => {
-      detailedResults.push({
+      detailedReport.push({
         ...defaultProps,
         ...wordData,
         sentenceNumber: sentenceIndex + 1,
@@ -215,18 +215,16 @@ function collateReadingData({
     );
   });
 
-  const saccadeTotalTimesPerSentence = saccadeTotalTimesPerSentence.map(
-    (line) => ({
-      ...defaultProps,
-      ...line,
-    })
-  );
+  const saccadeDetailedReport = saccadeTotalTimesPerSentence.map((line) => ({
+    ...defaultProps,
+    ...line,
+  }));
 
   return {
-    detailedResults,
+    detailedReport,
     maxTimeWordsPerSentence,
     maxFixationWordsPerSentence,
-    saccadeTotalTimesPerSentence,
+    saccadeDetailedReport,
   };
 }
 
@@ -257,25 +255,25 @@ export async function POST(req) {
     },
   });
 
-  const detailedResults = await createDetailedReport(result.detailedResults);
+  const detailedReport = await createDetailedReport(result.detailedReport);
   const maxTimeWordsPerSentence = await createMaxTimeSpentWordsPerSentence(
     result.maxTimeWordsPerSentence
   );
   const maxFixationWordsPerSentence = await createMaxFixatedWordsPerSentence(
     result.maxFixationWordsPerSentence
   );
-  const saccadeTotalTimesPerSentence = await createSaccadeTotalTimesPerSentence(
-    result.saccadeTotalTimesPerSentence
+  const saccadeDetailedReport = await createSaccadeTotalTimesPerSentence(
+    result.saccadeDetailedReport
   );
   const batch = await createBatch({ batchNumber: batchNumber + 1 });
 
   return NextResponse.json(
     {
       batch,
-      detailedResults,
+      detailedReport,
       maxTimeWordsPerSentence,
       maxFixationWordsPerSentence,
-      saccadeTotalTimesPerSentence,
+      saccadeDetailedReport,
     },
     { status: 200 }
   );

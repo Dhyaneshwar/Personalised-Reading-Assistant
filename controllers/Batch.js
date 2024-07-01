@@ -20,7 +20,6 @@ export async function getLastBatch() {
 
 export async function createBatch(data) {
   try {
-    console.log(data);
     const batch = await Batch.create(data);
     return batch;
   } catch (error) {
