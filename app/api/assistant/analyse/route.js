@@ -1,3 +1,9 @@
+import { createBatch, getLastBatch } from "@/controllers/Batch";
+import { createDetailedReport } from "@/controllers/DetailedReport";
+import { createMaxFixatedWordsPerSentence } from "@/controllers/MaxFixatedWordsPerSentence";
+import { createMaxTimeSpentWordsPerSentence } from "@/controllers/MaxTimeSpentWordsPerSentence";
+import { createSaccadeTotalTimesPerSentence } from "@/controllers/SaccadeTotalTimesPerSentence";
+import dbConnect from "@/lib/dbconnect";
 import _ from "lodash";
 import { NextResponse } from "next/server";
 
@@ -125,7 +131,7 @@ function calculateCumulativeWordTimesPerSentence(linesObj) {
   return totalTimesPerWord;
 }
 
-function calculateCumulativeWordTimes(totalTimesPerWord, type = "actual") {
+function calculateCumulativeWordTimes(totalTimesPerWord) {
   const sentenceResult = [];
   totalTimesPerWord.forEach((sentence, index) => {
     const cumulativeTotalTime = sentence.reduce(
@@ -133,7 +139,7 @@ function calculateCumulativeWordTimes(totalTimesPerWord, type = "actual") {
       0
     );
     sentenceResult.push({
-      sentence: index + 1,
+      sentenceNumber: index + 1,
       cumulativeTotalTime,
     });
   });
@@ -162,8 +168,7 @@ function calculateTimeSpentForEachSentence({
 }
 
 function collateReadingData({
-  topicId,
-  contentId,
+  defaultProps,
   actualTotalTimesPerWord,
   actualTotalTimesPerSentence,
   saccadeTotalTimesPerSentence,
@@ -178,8 +183,7 @@ function collateReadingData({
 
     words.forEach((wordData) => {
       detailedResults.push({
-        topicId,
-        contentId,
+        ...defaultProps,
         ...wordData,
         sentenceNumber: sentenceIndex + 1,
         sentenceReadTime,
@@ -190,8 +194,10 @@ function collateReadingData({
       (a, b) => b.cumulativeTotalTime - a.cumulativeTotalTime
     );
     maxTimeWordsPerSentence.push(
-      ...sortedByTime.slice(0, 3).map((timed) => ({
+      ...sortedByTime.slice(0, 3).map((timed, index) => ({
         ...timed,
+        ...defaultProps,
+        rank: index + 1,
         sentenceNumber: sentenceIndex + 1,
       }))
     );
@@ -200,28 +206,35 @@ function collateReadingData({
       (a, b) => b.fixationCount - a.fixationCount
     );
     maxFixationWordsPerSentence.push(
-      ...sortedByFixation.slice(0, 3).map((fixation) => ({
+      ...sortedByFixation.slice(0, 3).map((fixation, index) => ({
         ...fixation,
+        ...defaultProps,
+        rank: index + 1,
         sentenceNumber: sentenceIndex + 1,
       }))
     );
   });
 
-  const saccadeDetails = saccadeTotalTimesPerSentence.map((line) => ({
-    topicId,
-    contentId,
-    ...line,
-  }));
+  const saccadeTotalTimesPerSentence = saccadeTotalTimesPerSentence.map(
+    (line) => ({
+      ...defaultProps,
+      ...line,
+    })
+  );
 
   return {
     detailedResults,
     maxTimeWordsPerSentence,
     maxFixationWordsPerSentence,
-    saccadeDetails,
+    saccadeTotalTimesPerSentence,
   };
 }
 
 export async function POST(req) {
+  await dbConnect();
+
+  const currentBatchNumber = await getLastBatch();
+  const { batchNumber = 1 } = currentBatchNumber || {};
   const body = await req.json();
   const { topicId, contentId } = body;
   const lines = processGazeContent(body);
@@ -237,9 +250,33 @@ export async function POST(req) {
   const result = collateReadingData({
     ...totalTimesPerWord,
     ...totalTimesPerSentence,
-    topicId,
-    contentId,
+    defaultProps: {
+      topicId,
+      contentId,
+      batchNumber,
+    },
   });
 
-  return NextResponse.json(result, { status: 200 });
+  const detailedResults = await createDetailedReport(result.detailedResults);
+  const maxTimeWordsPerSentence = await createMaxTimeSpentWordsPerSentence(
+    result.maxTimeWordsPerSentence
+  );
+  const maxFixationWordsPerSentence = await createMaxFixatedWordsPerSentence(
+    result.maxFixationWordsPerSentence
+  );
+  const saccadeTotalTimesPerSentence = await createSaccadeTotalTimesPerSentence(
+    result.saccadeTotalTimesPerSentence
+  );
+  const batch = await createBatch({ batchNumber: batchNumber + 1 });
+
+  return NextResponse.json(
+    {
+      batch,
+      detailedResults,
+      maxTimeWordsPerSentence,
+      maxFixationWordsPerSentence,
+      saccadeTotalTimesPerSentence,
+    },
+    { status: 200 }
+  );
 }
