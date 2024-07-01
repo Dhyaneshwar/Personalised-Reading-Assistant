@@ -2,14 +2,17 @@
 import { useState } from "react";
 import QuestionModal from "./QuestionModal";
 import SummaryModal from "./SummaryModal";
+import { useParams } from "next/navigation";
 
 function ContentPage({ content }) {
+  const { topicId, contentId } = useParams();
   const [isSummaryOpen, setIsSummaryOpen] = useState(false);
   const [isQuestionOpen, setIsQuestionOpen] = useState(false);
 
   const clearGazeData = () => {
     const { webgazer } = window || {};
     webgazer.wordAtPixel = [];
+    webgazer.wordReadAt = [];
   };
 
   const handleSummaryOpen = () => setIsSummaryOpen(true);
@@ -19,6 +22,37 @@ function ContentPage({ content }) {
   const handleQuestionOpen = () => setIsQuestionOpen(true);
 
   const handleQuestionClose = () => setIsQuestionOpen(false);
+
+  const handleProcessData = async () => {
+    const { webgazer } = window || {};
+    const { lines, wordAtPixel, wordReadAt } = webgazer;
+    const prompt = {
+      topicId,
+      contentId,
+      originalLines: lines,
+      gazeContent: wordAtPixel.join(" "),
+      wordReadTime: wordReadAt,
+    };
+    try {
+      const resp = await fetch("/api/assistant/analyse", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(prompt),
+      });
+
+      if (!resp.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const dataSummary = await resp.json();
+      console.log(dataSummary);
+    } catch (error) {
+      console.error("Failed to fetch summary:", error);
+      return null;
+    }
+  };
 
   return (
     <>
@@ -79,6 +113,12 @@ function ContentPage({ content }) {
             onClick={handleQuestionOpen}
           >
             Generate Question
+          </button>
+          <button
+            className="border border-slate-600 bg-slate-400 p-3 rounded-xl text-black"
+            onClick={handleProcessData}
+          >
+            Process Data
           </button>
         </div>
       </div>
