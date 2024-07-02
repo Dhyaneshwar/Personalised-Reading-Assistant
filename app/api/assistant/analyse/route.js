@@ -46,18 +46,19 @@ function processGazeContent({ originalLines, gazeContent }) {
   return { actualLines, saccadeLines };
 }
 
-function calculateTimeDifferences({ data }) {
-  for (let i = 0; i < data.length; i++) {
-    if (i < data.length - 1) {
-      data[i].totalTime = data[i + 1].timestamp - data[i].timestamp;
+function calculateTimeDifferences({ wordReadTime }) {
+  for (let i = 0; i < wordReadTime.length; i++) {
+    if (i < wordReadTime.length - 1) {
+      wordReadTime[i].totalTime =
+        wordReadTime[i + 1].timestamp - wordReadTime[i].timestamp;
     } else {
-      data[i].totalTime = 0;
+      wordReadTime[i].totalTime = 0;
     }
   }
 }
 
 function averageTimeSpentOnEachWordPerSentence({
-  data = [],
+  wordReadTime = [],
   actualLines,
   saccadeLines,
 }) {
@@ -66,7 +67,7 @@ function averageTimeSpentOnEachWordPerSentence({
   const actualLineWords = actualLines.map((line) => line.trim().split(" "));
   const saccadeLineWords = saccadeLines.map((line) => line.trim().split(" "));
 
-  let isActual = data[0].word === actualLineWords[0]?.[0];
+  let isActual = wordReadTime[0].word === actualLineWords[0]?.[0];
   const [firstWordBelongsTo, followedBy] = isActual
     ? [actualLineWords, saccadeLineWords]
     : [saccadeLineWords, actualLineWords];
@@ -80,7 +81,7 @@ function averageTimeSpentOnEachWordPerSentence({
     startIndex = endIndex;
     endIndex = startIndex + (firstWordBelongsTo[i]?.length || 0);
 
-    const segmentData = data.slice(startIndex, endIndex);
+    const segmentData = wordReadTime.slice(startIndex, endIndex);
 
     if (isActual) {
       actualLinesObj.push(segmentData);
@@ -91,7 +92,7 @@ function averageTimeSpentOnEachWordPerSentence({
     startIndex = endIndex;
     endIndex = startIndex + (followedBy[i]?.length || 0);
 
-    const segmentData2 = data.slice(startIndex, endIndex);
+    const segmentData2 = wordReadTime.slice(startIndex, endIndex);
 
     if (!isActual) {
       actualLinesObj.push(segmentData2);
@@ -108,8 +109,10 @@ function averageTimeSpentOnEachWordPerSentence({
 
 function calculateCumulativeWordTimesPerSentence(linesObj) {
   const groupedWordsBySentence = linesObj.map((sentenceWords) => {
-    return _.mapValues(_.groupBy(sentenceWords, "word"), (wordEntries) =>
-      wordEntries.map((entry) => _.omit(entry, ["word", "timestamp"]))
+    return _.mapValues(
+      _.groupBy(sentenceWords, ({ word }) => word.toLowerCase()),
+      (wordEntries) =>
+        wordEntries.map((entry) => _.omit(entry, ["word", "timestamp"]))
     );
   });
   const totalTimesPerWord = [];
@@ -169,6 +172,7 @@ function calculateTimeSpentForEachSentence({
 
 function collateReadingData({
   defaultProps,
+  originalLines,
   actualTotalTimesPerWord,
   actualTotalTimesPerSentence,
   saccadeTotalTimesPerSentence,
@@ -185,6 +189,10 @@ function collateReadingData({
       detailedReport.push({
         ...defaultProps,
         ...wordData,
+        isPresentInSentence: _.includes(
+          originalLines[sentenceIndex].toLowerCase(),
+          wordData.word
+        ),
         sentenceNumber: sentenceIndex + 1,
         sentenceReadTime,
       });
@@ -248,6 +256,7 @@ export async function POST(req) {
   const result = collateReadingData({
     ...totalTimesPerWord,
     ...totalTimesPerSentence,
+    ...body,
     defaultProps: {
       topicId,
       contentId,

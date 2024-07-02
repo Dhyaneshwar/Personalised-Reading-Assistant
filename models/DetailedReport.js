@@ -21,6 +21,10 @@ const DetailedReportSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  isPresentInSentence: {
+    type: Boolean,
+    required: true,
+  },
   cumulativeTotalTime: {
     type: Number,
     required: true,
