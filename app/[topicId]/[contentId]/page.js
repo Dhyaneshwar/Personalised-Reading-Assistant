@@ -2,6 +2,7 @@
 import ConsentForm from "@/components/ConsentForm";
 import ContentPage from "@/components/Content";
 import EyeTracker from "@/components/EyeTracker";
+import Footer from "@/components/Footer";
 import HeaderBar from "@/components/HeaderBar";
 import { contents } from "@/lib/data";
 import { useParams } from "next/navigation";
@@ -20,6 +21,7 @@ function ContentContainer() {
         <ConsentForm isOpen={isConsentOpen} handleClose={handleConsentClose} />
         <HeaderBar title={title} />
         <ContentPage content={content} />
+        <Footer />
       </>
     );
   }
@@ -28,6 +30,7 @@ function ContentContainer() {
       <HeaderBar title={title} />
       <EyeTracker />
       <ContentPage content={content} />
+      <Footer />
     </>
   );
 }

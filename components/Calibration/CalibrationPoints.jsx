@@ -83,18 +83,18 @@ function CalibrationPointsPage() {
   };
 
   return (
-    <>
+    <div className="w-[95vw] h-[92.5vh]">
       {calibrationPoints.map(({ id, style }) => (
         <button
           key={id}
           type="button"
           style={style}
-          className="ml-5 size-8 rounded-full bg-red-500 opacity-20 border border-black fixed"
+          className="ml-5 size-8 rounded-full bg-red-500 opacity-20 border border-black absolute"
           id={`Pt${id}`}
           onClick={(event) => handleCalibrationPoints(id, event)}
         />
       ))}
-    </>
+    </div>
   );
 }
 

@@ -6,6 +6,7 @@ import { contents as allContents, topics } from "@/lib/data";
 import HeaderBar from "@/components/HeaderBar";
 import CardContainer from "@/components/CardContainer/CardContainer";
 import AboutPage from "@/components/About";
+import Footer from "@/components/Footer";
 
 function TopicPage() {
   const { topicId } = useParams();
@@ -22,6 +23,7 @@ function TopicPage() {
           pathName={`/${topicId}`}
         />
       </div>
+      <Footer />
     </>
   );
 }

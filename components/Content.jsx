@@ -66,7 +66,7 @@ function ContentPage({ content }) {
         />
       )}
 
-      <div className="flex flex-col w-full gap-8">
+      <div className="flex flex-col w-full gap-8 mb-10">
         <div className="border border-black overflow-y-auto w-4/5 h-[65vh] mx-auto mt-3 p-3 px-8">
           <div
             className="leading-[2.5] text-justify text-2xl"
@@ -118,7 +118,7 @@ function ContentPage({ content }) {
             className="border border-slate-600 bg-slate-400 p-3 rounded-xl text-black"
             onClick={handleProcessData}
           >
-            Process Data
+            Analyse Gaze Data
           </button>
         </div>
       </div>
