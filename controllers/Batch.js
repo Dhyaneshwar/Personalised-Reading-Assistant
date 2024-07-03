@@ -65,3 +65,17 @@ export async function deleteAllBatch() {
     console.log(error);
   }
 }
+
+export async function deleteBatchByBatchNumber(batchNumber) {
+  try {
+    const batch = await Batch.deleteMany({
+      batchNumber,
+    });
+    if (!batch) {
+      return "Batch not found";
+    }
+    return batch;
+  } catch (error) {
+    console.log(error);
+  }
+}

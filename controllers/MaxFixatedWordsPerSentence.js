@@ -62,3 +62,20 @@ export async function deleteAllMaxFixatedWordsPerSentence() {
     console.log(error);
   }
 }
+
+export async function deleteMaxFixatedWordsPerSentenceByBatchNumber(
+  batchNumber
+) {
+  try {
+    const maxFixatedWordsPerSentence =
+      await MaxFixatedWordsPerSentence.deleteMany({
+        batchNumber,
+      });
+    if (!maxFixatedWordsPerSentence) {
+      return "MaxFixatedWordsPerSentence not found";
+    }
+    return maxFixatedWordsPerSentence;
+  } catch (error) {
+    console.log(error);
+  }
+}

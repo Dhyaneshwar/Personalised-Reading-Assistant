@@ -61,3 +61,20 @@ export async function deleteAllSaccadeTotalTimesPerSentence() {
     console.log(error);
   }
 }
+
+export async function deleteSaccadeTotalTimesPerSentenceByBatchNumber(
+  batchNumber
+) {
+  try {
+    const saccadeTotalTimesPerSentence =
+      await SaccadeTotalTimesPerSentence.findOneAndDelete({
+        batchNumber,
+      });
+    if (!saccadeTotalTimesPerSentence) {
+      return "SaccadeTotalTimesPerSentence not found";
+    }
+    return saccadeTotalTimesPerSentence;
+  } catch (error) {
+    console.log(error);
+  }
+}

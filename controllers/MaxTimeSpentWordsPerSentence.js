@@ -61,3 +61,20 @@ export async function deleteAllMaxTimeSpentWordsPerSentence() {
     console.log(error);
   }
 }
+
+export async function deleteMaxTimeSpentWordsPerSentenceByBatchNumber(
+  batchNumber
+) {
+  try {
+    const maxTimeSpentWordsPerSentence =
+      await MaxTimeSpentWordsPerSentence.deleteMany({
+        batchNumber,
+      });
+    if (!maxTimeSpentWordsPerSentence) {
+      return "MaxTimeSpentWordsPerSentence not found";
+    }
+    return maxTimeSpentWordsPerSentence;
+  } catch (error) {
+    console.log(error);
+  }
+}

@@ -56,3 +56,17 @@ export async function deleteAllDetailedReport() {
     console.log(error);
   }
 }
+
+export async function deleteDetailedReportByBatchNumber(batchNumber) {
+  try {
+    const detailedReport = await DetailedReport.deleteMany({
+      batchNumber,
+    });
+    if (!detailedReport) {
+      return "DetailedReport not found";
+    }
+    return detailedReport;
+  } catch (error) {
+    console.log(error);
+  }
+}

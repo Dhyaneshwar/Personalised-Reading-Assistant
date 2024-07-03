@@ -49,15 +49,15 @@ function ReportPage() {
       const { webgazer } = window || {};
       const { lines = [], wordAtPixel = [], wordReadAt = [] } = webgazer || {};
 
-      const prompt = {
-        topicId,
-        contentId,
-        originalLines: lines,
-        gazeContent: wordAtPixel.join(" "),
-        wordReadTime: wordReadAt,
-      };
+      // const prompt = {
+      //   topicId,
+      //   contentId,
+      //   originalLines: lines,
+      //   gazeContent: wordAtPixel.join(" "),
+      //   wordReadTime: wordReadAt,
+      // };
 
-      //   const prompt = defaultPrompt
+      const prompt = defaultPrompt;
       try {
         const resp = await fetch("/api/assistant/analyse", {
           method: "POST",
