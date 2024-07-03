@@ -1,4 +1,5 @@
 "use client";
+import Footer from "@/components/Footer";
 import HeaderBar from "@/components/HeaderBar";
 import React, { useRef, useState } from "react";
 
@@ -84,7 +85,7 @@ function AdminPage() {
   return (
     <>
       <HeaderBar title="Admin Page" />
-      <div className="w-[95vw] h-[92vh] text-center mx-auto p-5 bg-slate-100 text-xl">
+      <div className="w-[95vw] text-center mx-auto p-5 bg-slate-100 text-xl">
         <div className="Delete_All_Data_Container w-full h-[25vh] bg-red-300 mb-5 flex items-center justify-center rounded-xl flex-col">
           <div className="Delete_All_Data flex justify-center items-center gap-8">
             <p>
@@ -95,7 +96,7 @@ function AdminPage() {
               className="capitalize text-2xl mb-5 px-4 py-1 rounded-md bg-slate-500 border border-blue-400"
               onClick={deleteAllDataHandler}
             >
-              Delete All Data
+              Delete All participant Data
             </button>
           </div>
           <p className="Delete_All_Data_Response capitalize text-green-700  mt-4 p-2 rounded-lg inline-block bg-white font-bold">
@@ -135,7 +136,7 @@ function AdminPage() {
               className="capitalize text-2xl mb-5 px-4 py-1 rounded-md bg-slate-500 border border-blue-400"
               onClick={deleteMentionedDataHandler}
             >
-              Delete Mentioned Data
+              Delete Mentioned participant Data
             </button>
           </div>
           <p className="Delete_Specific_Data_Response capitalize text-green-700 mt-4 p-2 rounded-lg inline-block bg-white font-bold">
@@ -143,6 +144,7 @@ function AdminPage() {
           </p>
         </div>
       </div>
+      <Footer />
     </>
   );
 }

@@ -27,6 +27,14 @@ import {
 import dbConnect from "@/lib/dbconnect";
 import { NextResponse } from "next/server";
 
+const deleteUsingBatchNumber = async (batchNumber) => {
+  await deleteDetailedReportByBatchNumber(batchNumber);
+  await deleteMaxTimeSpentWordsPerSentenceByBatchNumber(batchNumber);
+  await deleteMaxFixatedWordsPerSentenceByBatchNumber(batchNumber);
+  await deleteSaccadeTotalTimesPerSentenceByBatchNumber(batchNumber);
+  await deleteBatchByBatchNumber(batchNumber + 1);
+};
+
 export async function POST(req) {
   await dbConnect();
   const body = await req.json();
@@ -76,7 +84,6 @@ export async function DELETE(req) {
       await deleteAllMaxTimeSpentWordsPerSentence();
       await deleteAllSaccadeTotalTimesPerSentence();
       await deleteAllBatch();
-
       response = "Successfully Deleted All Data From Database";
       break;
 
@@ -85,28 +92,12 @@ export async function DELETE(req) {
       const { batchNumber: currentBatchNumber = 1 } =
         currentBatchNumberDoc || {};
       const lastBatchNumber = currentBatchNumber - 1;
-      console.log(typeof lastBatchNumber);
-      await deleteDetailedReportByBatchNumber(lastBatchNumber);
-      await deleteMaxTimeSpentWordsPerSentenceByBatchNumber(lastBatchNumber);
-      await deleteMaxFixatedWordsPerSentenceByBatchNumber(lastBatchNumber);
-      await deleteSaccadeTotalTimesPerSentenceByBatchNumber(lastBatchNumber);
-      await deleteBatchByBatchNumber(currentBatchNumber);
-
+      await deleteUsingBatchNumber(lastBatchNumber);
       response = "Successfully Deleted Last Participant Data From Database";
       break;
 
     case "specific":
-      const specificBatchNumber = batchNumber;
-      await deleteDetailedReportByBatchNumber(specificBatchNumber);
-      await deleteMaxTimeSpentWordsPerSentenceByBatchNumber(
-        specificBatchNumber
-      );
-      await deleteMaxFixatedWordsPerSentenceByBatchNumber(specificBatchNumber);
-      await deleteSaccadeTotalTimesPerSentenceByBatchNumber(
-        specificBatchNumber
-      );
-      await deleteBatchByBatchNumber(specificBatchNumber);
-
+      await deleteUsingBatchNumber(batchNumber);
       response =
         "Successfully Deleted Mentioned Participant Data From Database";
       break;
