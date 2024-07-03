@@ -5,6 +5,7 @@
 }
 
 .Card_Title_Span {
+  text-transform: capitalize;
   display: inline-block;
   transition: all 0.25s;
 }

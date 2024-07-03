@@ -2,10 +2,10 @@ import React from "react";
 import CardTitle from "./CardContainer/CardTitle";
 import _ from "lodash";
 
-function AboutPage({ title, paras = [] }) {
+function AboutPage({ title = "About", paras = [] }) {
   return (
     <>
-      <CardTitle cardTitle="About" />
+      <CardTitle cardTitle={title} />
       {paras.map((para, index) => {
         if (!_.isString(para)) {
           return para;

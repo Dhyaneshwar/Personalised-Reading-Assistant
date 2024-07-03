@@ -3,9 +3,11 @@ import { useState } from "react";
 import QuestionModal from "./QuestionModal";
 import SummaryModal from "./SummaryModal";
 import { useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
-function ContentPage({ content }) {
+function ContentPage({ content, displayButton = true }) {
   const { topicId, contentId } = useParams();
+  const router = useRouter();
   const [isSummaryOpen, setIsSummaryOpen] = useState(false);
   const [isQuestionOpen, setIsQuestionOpen] = useState(false);
 
@@ -25,32 +27,9 @@ function ContentPage({ content }) {
 
   const handleProcessData = async () => {
     const { webgazer } = window || {};
-    const { lines, wordAtPixel, wordReadAt } = webgazer;
-    const prompt = {
-      topicId,
-      contentId,
-      originalLines: lines,
-      gazeContent: wordAtPixel.join(" "),
-      wordReadTime: wordReadAt,
-    };
-    try {
-      const resp = await fetch("/api/assistant/analyse", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(prompt),
-      });
-
-      if (!resp.ok) {
-        throw new Error("Network response was not ok");
-      }
-
-      const dataSummary = await resp.json();
-      console.log(dataSummary);
-    } catch (error) {
-      console.error("Failed to fetch summary:", error);
-      return null;
+    const words = webgazer?.wordAtPixel || [];
+    if (words.length > 30) {
+      router.push(`/report?topicId=${topicId}&contentId=${contentId}`);
     }
   };
 
@@ -95,32 +74,34 @@ function ContentPage({ content }) {
             to play a similar role.`}
           </div>
         </div>
-        <div className="flex gap-14 justify-center">
-          <button
-            className="border border-slate-600 bg-slate-400 p-3 rounded-xl text-black"
-            onClick={clearGazeData}
-          >
-            Clear Gaze Data
-          </button>
-          <button
-            className="border border-slate-600 bg-slate-400 p-3 rounded-xl text-black"
-            onClick={handleSummaryOpen}
-          >
-            Generate Summary
-          </button>
-          <button
-            className="border border-slate-600 bg-slate-400 p-3 rounded-xl text-black"
-            onClick={handleQuestionOpen}
-          >
-            Generate Question
-          </button>
-          <button
-            className="border border-slate-600 bg-slate-400 p-3 rounded-xl text-black"
-            onClick={handleProcessData}
-          >
-            Analyse Gaze Data
-          </button>
-        </div>
+        {displayButton && (
+          <div className="flex gap-14 justify-center">
+            <button
+              className="border border-slate-600 bg-slate-400 p-3 rounded-xl text-black"
+              onClick={clearGazeData}
+            >
+              Clear Gaze Data
+            </button>
+            <button
+              className="border border-slate-600 bg-slate-400 p-3 rounded-xl text-black"
+              onClick={handleSummaryOpen}
+            >
+              Generate Summary
+            </button>
+            <button
+              className="border border-slate-600 bg-slate-400 p-3 rounded-xl text-black"
+              onClick={handleQuestionOpen}
+            >
+              Generate Question
+            </button>
+            <button
+              className="border border-slate-600 bg-slate-400 p-3 rounded-xl text-black"
+              onClick={handleProcessData}
+            >
+              Analyse Gaze Data
+            </button>
+          </div>
+        )}
       </div>
     </>
   );

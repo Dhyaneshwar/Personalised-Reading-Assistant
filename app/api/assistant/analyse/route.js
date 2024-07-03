@@ -223,10 +223,14 @@ function collateReadingData({
     );
   });
 
-  const saccadeDetailedReport = saccadeTotalTimesPerSentence.map((line) => ({
-    ...defaultProps,
-    ...line,
-  }));
+  const saccadeDetailedReport = saccadeTotalTimesPerSentence.map(
+    (line, index) => ({
+      ...defaultProps,
+      ...line,
+      from: index + 1,
+      to: index + 2,
+    })
+  );
 
   return {
     detailedReport,
@@ -253,15 +257,16 @@ export async function POST(req) {
   const totalTimesPerSentence =
     calculateTimeSpentForEachSentence(totalTimesPerWord);
 
+  const defaultProps = {
+    topicId,
+    contentId,
+    batchNumber,
+  };
   const result = collateReadingData({
     ...totalTimesPerWord,
     ...totalTimesPerSentence,
     ...body,
-    defaultProps: {
-      topicId,
-      contentId,
-      batchNumber,
-    },
+    defaultProps,
   });
 
   const detailedReport = await createDetailedReport(result.detailedReport);
@@ -274,15 +279,29 @@ export async function POST(req) {
   const saccadeDetailedReport = await createSaccadeTotalTimesPerSentence(
     result.saccadeDetailedReport
   );
-  const batch = await createBatch({ batchNumber: batchNumber + 1 });
+  await createBatch({ batchNumber: batchNumber + 1 });
 
   return NextResponse.json(
     {
-      batch,
-      detailedReport,
-      maxTimeWordsPerSentence,
-      maxFixationWordsPerSentence,
-      saccadeDetailedReport,
+      batch: defaultProps,
+      detailedReport: detailedReport.map((report, index) => ({
+        ...report.toObject({ getters: true }),
+        index: index + 1,
+      })),
+      maxTimeWordsPerSentence: maxTimeWordsPerSentence.map((time, index) => ({
+        ...time.toObject({ getters: true }),
+        index: index + 1,
+      })),
+      maxFixationWordsPerSentence: maxFixationWordsPerSentence.map(
+        (fixation, index) => ({
+          ...fixation.toObject({ getters: true }),
+          index: index + 1,
+        })
+      ),
+      saccadeDetailedReport: saccadeDetailedReport.map((saccade, index) => ({
+        ...saccade.toObject({ getters: true }),
+        index: index + 1,
+      })),
     },
     { status: 200 }
   );

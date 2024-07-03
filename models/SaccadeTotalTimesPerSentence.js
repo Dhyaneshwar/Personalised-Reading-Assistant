@@ -21,6 +21,14 @@ const SaccadeTotalTimesPerSentenceSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  from: {
+    type: Number,
+    required: true,
+  },
+  to: {
+    type: Number,
+    required: true,
+  },
 });
 
 export default mongoose.models.SaccadeTotalTimesPerSentence ||
