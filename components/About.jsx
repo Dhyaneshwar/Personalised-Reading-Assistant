@@ -12,7 +12,7 @@ function AboutPage({ title = "About", paras = [] }) {
         }
         return (
           <div key={index} className="">
-            <p className="text-justify px-10">{para}</p>
+            <p className="px-10 text-justify">{para}</p>
             <br />
           </div>
         );

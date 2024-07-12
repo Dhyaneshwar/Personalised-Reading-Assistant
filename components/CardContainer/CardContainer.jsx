@@ -27,7 +27,7 @@ function CardContainer({ cardTitle, cardContent, pathName = "" }) {
     if (cardTitle === "Topics") {
       const con = contents.filter(({ topicId }) => topicId === cid);
       return (
-        <ul className="list-disc  list-inside text-justify">
+        <ul className="list-inside list-disc text-justify">
           {con.map((c, index) => (
             <li key={index}>
               <span className={`${classes.Card_Content_List}`}>{c.title}</span>
@@ -44,7 +44,7 @@ function CardContainer({ cardTitle, cardContent, pathName = "" }) {
   return (
     <>
       <CardTitle cardTitle={cardTitle + " Available"} />
-      <div className="w-[90%] mx-auto grid grid-cols-3 auto-rows-auto gap-11">
+      <div className="mx-auto grid w-[90%] auto-rows-auto grid-cols-3 gap-11">
         {cardContent.map(({ id, title, img }, index) => (
           <div className={`${classes.Card}`} key={index}>
             <div className={`${classes.Card_Side} ${classes.Card_Side_Front}`}>

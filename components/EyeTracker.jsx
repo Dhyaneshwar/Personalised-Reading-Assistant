@@ -77,8 +77,8 @@ export default function EyeTracker() {
           className={`${
             enableWebgazer
               ? "bg-slate-400 text-zinc-950"
-              : "bg-slate-100 text-zinc-500 cursor-not-allowed"
-          } m-6 p-2 w-32 h-16 rounded-xl`}
+              : "cursor-not-allowed bg-slate-100 text-zinc-500"
+          } m-6 h-16 w-32 rounded-xl p-2`}
           onClick={handlePreview}
           disabled={!enableWebgazer}
         >
@@ -88,15 +88,15 @@ export default function EyeTracker() {
           className={`${
             enableWebgazer
               ? "bg-slate-400 text-zinc-950"
-              : "bg-slate-100 text-zinc-500 cursor-not-allowed"
-          } m-6 p-2 w-32 h-16 rounded-xl`}
+              : "cursor-not-allowed bg-slate-100 text-zinc-500"
+          } m-6 h-16 w-32 rounded-xl p-2`}
           onClick={handlePrediction}
           disabled={!enableWebgazer}
         >
           {showPredictions ? "Hide" : "Show"} Predictions
         </button>
         <button
-          className="bg-slate-400 m-6 p-2 w-32 h-16 rounded-xl"
+          className="m-6 h-16 w-32 rounded-xl bg-slate-400 p-2"
           onClick={handleWebgazerState}
         >
           {enableWebgazer ? "Disable" : "Enable"} Webgazer

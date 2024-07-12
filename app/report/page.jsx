@@ -30,7 +30,7 @@ function ReportPage() {
       maxTimeWordsPerSentence: [],
       saccadeDetailedReport: [],
     }),
-    []
+    [],
   );
   const searchParams = useSearchParams();
   const topicId = searchParams.get("topicId");
@@ -40,7 +40,7 @@ function ReportPage() {
 
   const { title: topicTitle } = topics.find(({ id }) => id === topicId);
   const { title: contentTitle, content } = contents.find(
-    ({ id }) => id === contentId
+    ({ id }) => id === contentId,
   );
 
   useEffect(() => {
@@ -86,7 +86,7 @@ function ReportPage() {
     return (
       <>
         <HeaderBar title="Report Page" />
-        <div className="w-[95vw] text-center mx-auto p-5 bg-slate-100">
+        <div className="mx-auto w-[95vw] bg-slate-100 p-5 text-center">
           <div className="Acknowledgement_Container">
             <p>Please wait your data is currently being processed</p>
           </div>
@@ -99,7 +99,7 @@ function ReportPage() {
   return (
     <>
       <HeaderBar title="Report Page" />
-      <div className="w-[95vw] text-center mx-auto p-5 bg-slate-100">
+      <div className="mx-auto w-[95vw] bg-slate-100 p-5 text-center">
         <div className="Acknowledgement_Container">
           <p>
             Thank you for participating in this study. Your unique participation

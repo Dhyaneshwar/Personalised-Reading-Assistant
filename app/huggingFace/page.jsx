@@ -22,13 +22,13 @@ const HuggingFacePage = () => {
     <>
       <div className="m-10">
         <textarea
-          className="border-2  border-black p-4 w-[1000px] h-[150px]"
+          className="h-[150px] w-[1000px] border-2 border-black p-4"
           placeholder="type here"
           ref={inputRef}
         />
         <div>
           <button
-            className="bg-slate-300 p-4 rounded-lg"
+            className="rounded-lg bg-slate-300 p-4"
             onClick={getSummaryHandler}
           >
             Get Summary

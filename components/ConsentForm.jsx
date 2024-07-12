@@ -17,7 +17,7 @@ function ConsentForm({ isOpen, handleClose }) {
     <Modal open={isOpen}>
       <Box style={style}>
         <h1
-          className="mb-3 text-3xl font-semibold text-center sticky mt-[-25px] ml-[-50px] w-[110%] bg-white p-4"
+          className="sticky mb-3 ml-[-50px] mt-[-25px] w-[110%] bg-white p-4 text-center text-3xl font-semibold"
           style={{ top: "-25px" }}
         >
           Consent Form
@@ -31,8 +31,8 @@ function ConsentForm({ isOpen, handleClose }) {
             experience.
           </p>
           <br />
-          <ul className="list-disc text-justify list-inside">
-            <span className="font-bold text-2xl">
+          <ul className="list-inside list-disc text-justify">
+            <span className="text-2xl font-bold">
               Types of Data Collected:{" "}
             </span>
             <li>
@@ -46,8 +46,8 @@ function ConsentForm({ isOpen, handleClose }) {
           </ul>
           <br />
           <div>
-            <ul className="list-disc list-inside text-justify">
-              <span className="font-bold text-2xl">Privacy Measures:</span>
+            <ul className="list-inside list-disc text-justify">
+              <span className="text-2xl font-bold">Privacy Measures:</span>
               <li>
                 <span className="font-bold">No Raw Video Data: </span>It is
                 important to note that no images or pictures of you will be
@@ -90,7 +90,7 @@ function ConsentForm({ isOpen, handleClose }) {
           />
           <label for="consent">I have read everything</label>
         </div>
-        <footer className="flex justify-center gap-10 text-center mt-8">
+        <footer className="mt-8 flex justify-center gap-10 text-center">
           <button
             className={`${classes.Btn} ${classes.Btn_Green} w-24`}
             onClick={acceptConsentHandler}

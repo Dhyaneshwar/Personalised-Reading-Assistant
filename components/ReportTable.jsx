@@ -8,7 +8,7 @@ function ReportTable({ title, paras, rows, columns, width = "50%" }) {
     <>
       <AboutPage title={title} paras={paras} />
       <Box
-        className="h-96 mx-auto mb-8"
+        className="mx-auto mb-8 h-96"
         sx={{
           width,
           "& .MuiDataGrid-columnHeaderTitleContainer": {

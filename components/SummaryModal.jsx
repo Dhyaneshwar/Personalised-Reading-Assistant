@@ -12,7 +12,7 @@ export default function SummaryModal({ isOpen, handleClose }) {
       summaryData: "",
       definitions: { number_of_definitions: 0 },
     }),
-    []
+    [],
   );
   const [response, setResponse] = useState(initialResponse);
   const [toggleLinesRead, setToggleLinesRead] = useState(true);
@@ -77,7 +77,7 @@ export default function SummaryModal({ isOpen, handleClose }) {
       <Modal open={isLoading}>
         <Box style={style}>
           <h1
-            className="mb-3 text-3xl font-semibold text-center sticky mt-[-25px] ml-[-50px] w-[110%] bg-white p-4"
+            className="sticky mb-3 ml-[-50px] mt-[-25px] w-[110%] bg-white p-4 text-center text-3xl font-semibold"
             style={{ top: "-25px" }}
           >
             Summary & Definition is Loading
@@ -94,14 +94,14 @@ export default function SummaryModal({ isOpen, handleClose }) {
     <Modal open={isOpen} onClose={handleClose}>
       <Box style={style}>
         <h1
-          className="mb-3 text-3xl font-semibold text-center sticky mt-[-25px] ml-[-50px] w-[110%] bg-white p-4"
+          className="sticky mb-3 ml-[-50px] mt-[-25px] w-[110%] bg-white p-4 text-center text-3xl font-semibold"
           style={{ top: "-25px" }}
         >
           Summary
         </h1>
         <div className="Extracted_Gaze_Content">
           <div
-            className="cursor-pointer flex items-center"
+            className="flex cursor-pointer items-center"
             onClick={() => {
               setToggleLinesRead((prevState) => !prevState);
             }}
@@ -111,7 +111,7 @@ export default function SummaryModal({ isOpen, handleClose }) {
             ) : (
               <ArrowDropUp className="ml-[-24px]" />
             )}
-            <h3 className="font-semibold inline-block">Lines Read:</h3>
+            <h3 className="inline-block font-semibold">Lines Read:</h3>
           </div>
           {toggleLinesRead && (
             <p className="text-justify">{response?.extractedContent}</p>
@@ -119,17 +119,17 @@ export default function SummaryModal({ isOpen, handleClose }) {
         </div>
         {response.summaryData && (
           <div className="Summary_Container mt-10">
-            <h3 className="font-semibold inline-block">Brief Summary:</h3>
+            <h3 className="inline-block font-semibold">Brief Summary:</h3>
             <p className="text-justify">{response.summaryData}</p>
           </div>
         )}
         {response.definitions.number_of_definitions > 0 && (
           <div className="Definition_Container mt-10">
-            <h3 className="font-semibold inline-block">
+            <h3 className="inline-block font-semibold">
               Definitions for Important/Complicated Words:
             </h3>
             <p className="text-justify">
-              <ul className="list-disc  list-inside text-justify">
+              <ul className="list-inside list-disc text-justify">
                 {extractDefinition(response.definitions)}
               </ul>
             </p>

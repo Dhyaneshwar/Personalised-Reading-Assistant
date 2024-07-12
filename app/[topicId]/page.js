@@ -15,7 +15,7 @@ function TopicPage() {
   return (
     <>
       <HeaderBar title={title} />
-      <div className="w-[95vw] text-center mx-auto p-5 bg-slate-100">
+      <div className="mx-auto w-[95vw] bg-slate-100 p-5 text-center">
         <AboutPage title={title} paras={paras} />
         <CardContainer
           cardTitle="Contents"

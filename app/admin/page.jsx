@@ -85,61 +85,61 @@ function AdminPage() {
   return (
     <>
       <HeaderBar title="Admin Page" />
-      <div className="w-[95vw] text-center mx-auto p-5 bg-slate-100 text-xl">
-        <div className="Delete_All_Data_Container w-full h-[25vh] bg-red-300 mb-5 flex items-center justify-center rounded-xl flex-col">
-          <div className="Delete_All_Data flex justify-center items-center gap-8">
+      <div className="mx-auto w-[95vw] bg-slate-100 p-5 text-center text-xl">
+        <div className="Delete_All_Data_Container mb-5 flex h-[25vh] w-full flex-col items-center justify-center rounded-xl bg-red-300">
+          <div className="Delete_All_Data flex items-center justify-center gap-8">
             <p>
               To Delete All the collected data from the database click this
               button =&gt;
             </p>
             <button
-              className="capitalize text-2xl mb-5 px-4 py-1 rounded-md bg-slate-500 border border-blue-400"
+              className="mb-5 rounded-md border border-blue-400 bg-slate-500 px-4 py-1 text-2xl capitalize"
               onClick={deleteAllDataHandler}
             >
               Delete All participant Data
             </button>
           </div>
-          <p className="Delete_All_Data_Response capitalize text-green-700  mt-4 p-2 rounded-lg inline-block bg-white font-bold">
+          <p className="Delete_All_Data_Response mt-4 inline-block rounded-lg bg-white p-2 font-bold capitalize text-green-700">
             {deleteAllDataResponse}
           </p>
         </div>
-        <div className="Delete_Last_Participant_Container  w-full h-[25vh] bg-red-300 mb-5 flex items-center justify-center rounded-xl flex-col">
-          <div className="Delete_Last_Participant flex justify-center items-center gap-8">
+        <div className="Delete_Last_Participant_Container mb-5 flex h-[25vh] w-full flex-col items-center justify-center rounded-xl bg-red-300">
+          <div className="Delete_Last_Participant flex items-center justify-center gap-8">
             <p>
               To Delete All the data of last participant from the database click
               this button =&gt;
             </p>
             <button
-              className="capitalize text-2xl mb-5 px-4 py-1 rounded-md bg-slate-500 border border-blue-400"
+              className="mb-5 rounded-md border border-blue-400 bg-slate-500 px-4 py-1 text-2xl capitalize"
               onClick={deleteLastDataHandler}
             >
               Delete last participant data
             </button>
           </div>
-          <p className="Delete_Last_Participant_Response capitalize text-green-700  mt-4 p-2 rounded-lg inline-block bg-white font-bold">
+          <p className="Delete_Last_Participant_Response mt-4 inline-block rounded-lg bg-white p-2 font-bold capitalize text-green-700">
             {deleteLastDataResponse}
           </p>
         </div>
-        <div className="Delete_Specific_Data_Container  w-full h-[25vh] bg-red-300 mb-5 flex items-center justify-center rounded-xl flex-col">
-          <div className="Delete_Specific_Data flex justify-center items-center gap-8">
+        <div className="Delete_Specific_Data_Container mb-5 flex h-[25vh] w-full flex-col items-center justify-center rounded-xl bg-red-300">
+          <div className="Delete_Specific_Data flex items-center justify-center gap-8">
             <p>
               To Delete All the data of{" "}
               <input
                 ref={inputRef}
                 type="number"
                 min={0}
-                className="w-16 ml-1 mr-3 p-1 border border-gray-600"
+                className="ml-1 mr-3 w-16 border border-gray-600 p-1"
               />
               from the database click this button =&gt;
             </p>
             <button
-              className="capitalize text-2xl mb-5 px-4 py-1 rounded-md bg-slate-500 border border-blue-400"
+              className="mb-5 rounded-md border border-blue-400 bg-slate-500 px-4 py-1 text-2xl capitalize"
               onClick={deleteMentionedDataHandler}
             >
               Delete Mentioned participant Data
             </button>
           </div>
-          <p className="Delete_Specific_Data_Response capitalize text-green-700 mt-4 p-2 rounded-lg inline-block bg-white font-bold">
+          <p className="Delete_Specific_Data_Response mt-4 inline-block rounded-lg bg-white p-2 font-bold capitalize text-green-700">
             {deleteMentionedDataResponse}
           </p>
         </div>

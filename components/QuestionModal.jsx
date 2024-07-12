@@ -11,7 +11,7 @@ export default function QuestionModal({ isOpen, handleClose }) {
         "Please read the displayed content to generate some question",
       questions: { numOfQues: 0 },
     }),
-    []
+    [],
   );
   const [response, setResponse] = useState(initialResponse);
   const [isLoading, setIsLoading] = useState(false);
@@ -58,7 +58,7 @@ export default function QuestionModal({ isOpen, handleClose }) {
       } else {
         setResponse(initialResponse);
         setVisibleAnswers(
-          new Array(initialResponse.questions.numOfQues).fill(false)
+          new Array(initialResponse.questions.numOfQues).fill(false),
         );
       }
       setIsLoading(false);
@@ -69,14 +69,16 @@ export default function QuestionModal({ isOpen, handleClose }) {
 
   const toggleAnswerVisibility = (index) => {
     setVisibleAnswers((prevVisibleAnswers) =>
-      prevVisibleAnswers.map((visible, i) => (i === index ? !visible : visible))
+      prevVisibleAnswers.map((visible, i) =>
+        i === index ? !visible : visible,
+      ),
     );
   };
 
   const toggleAllAnswerVisibility = () => {
     const state = visibleAnswers.every((v) => v);
     setVisibleAnswers((prevVisibleAnswers) =>
-      prevVisibleAnswers.map((v) => !state)
+      prevVisibleAnswers.map((v) => !state),
     );
   };
 
@@ -84,10 +86,10 @@ export default function QuestionModal({ isOpen, handleClose }) {
     const { numOfQues, ...rest } = questions || {};
     return Object.values(rest).map((question, index) => (
       <>
-        <h3 className="font-bold text-xl mt-2">Questions {index + 1}: </h3>
-        <p className="capitalize font-medium mb-2"> {question.ques} </p>
+        <h3 className="mt-2 text-xl font-bold">Questions {index + 1}: </h3>
+        <p className="mb-2 font-medium capitalize"> {question.ques} </p>
         <button
-          className="p-1 rounded-lg bg-slate-400 border border-black"
+          className="rounded-lg border border-black bg-slate-400 p-1"
           onClick={() => toggleAnswerVisibility(index)}
         >
           {visibleAnswers[index] ? "Hide Answer" : "Show Answer"}
@@ -109,7 +111,7 @@ export default function QuestionModal({ isOpen, handleClose }) {
       <Modal open={isLoading}>
         <Box style={style}>
           <h1
-            className="mb-3 text-3xl font-semibold text-center sticky mt-[-25px] ml-[-50px] w-[110%] bg-white p-4"
+            className="sticky mb-3 ml-[-50px] mt-[-25px] w-[110%] bg-white p-4 text-center text-3xl font-semibold"
             style={{ top: "-25px" }}
           >
             Questions are Loading
@@ -127,14 +129,14 @@ export default function QuestionModal({ isOpen, handleClose }) {
       <Modal open={isOpen} onClose={handleClose}>
         <Box style={style}>
           <h1
-            className="mb-3 text-3xl font-semibold text-center sticky mt-[-25px] ml-[-50px] w-[110%] bg-white p-4"
+            className="sticky mb-3 ml-[-50px] mt-[-25px] w-[110%] bg-white p-4 text-center text-3xl font-semibold"
             style={{ top: "-25px" }}
           >
             Question
           </h1>
           <div className="Extracted_Gaze_Content">
             <div
-              className="cursor-pointer flex items-center"
+              className="flex cursor-pointer items-center"
               onClick={() => {
                 setToggleLinesRead((prevState) => !prevState);
               }}
@@ -144,7 +146,7 @@ export default function QuestionModal({ isOpen, handleClose }) {
               ) : (
                 <ArrowDropUp className="ml-[-24px]" />
               )}
-              <h3 className="font-semibold inline-block">Lines Read:</h3>
+              <h3 className="inline-block font-semibold">Lines Read:</h3>
             </div>
             {toggleLinesRead && (
               <p className="text-justify">{response.extractedContent}</p>
@@ -156,9 +158,9 @@ export default function QuestionModal({ isOpen, handleClose }) {
                 {extractQuestion(response.questions)}
               </div>
 
-              <div className="Show_All_Button text-justify flex justify-center">
+              <div className="Show_All_Button flex justify-center text-justify">
                 <button
-                  className="p-1 rounded-lg bg-slate-400 border border-black capitalize w-40 h-10 "
+                  className="h-10 w-40 rounded-lg border border-black bg-slate-400 p-1 capitalize"
                   onClick={toggleAllAnswerVisibility}
                 >
                   {visibleAnswers.every((v) => v) ? "hide" : "show"} all

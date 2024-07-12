@@ -4,19 +4,19 @@ import React from "react";
 
 function Footer() {
   return (
-    <div className="w-full h-80 bg-slate-800 flex justify-center items-center text-white">
-      <div className="w-[75%] h-[65%] grid grid-cols-6 grid-rows-4 place-content-stretch gap-2">
-        <div className="col-start-1 col-end-4 bg-green-700 ">
+    <div className="flex h-80 w-full items-center justify-center bg-slate-800 text-white">
+      <div className="grid h-[65%] w-[75%] grid-cols-6 grid-rows-4 place-content-stretch gap-2">
+        <div className="col-start-1 col-end-4 bg-green-700">
           <Link
-            className="flex justify-center items-center size-full text-center"
+            className="flex size-full items-center justify-center text-center"
             href="/"
           >
             Home
           </Link>
         </div>
-        <div className="col-end-7 col-span-3 bg-green-700">
+        <div className="col-span-3 col-end-7 bg-green-700">
           <Link
-            className="flex justify-center items-center size-full text-center"
+            className="flex size-full items-center justify-center text-center"
             href="calibrate/"
           >
             Calibrate
@@ -25,7 +25,7 @@ function Footer() {
         {topics.map(({ id, title }) => (
           <div className="bg-green-700" key={id}>
             <Link
-              className="flex justify-center items-center size-full text-center"
+              className="flex size-full items-center justify-center text-center"
               href={`/${id}`}
             >
               {title}
@@ -35,21 +35,21 @@ function Footer() {
 
         <div className="col-start-1 col-end-4 bg-green-700">
           <Link
-            className="flex justify-center items-center size-full text-center"
+            className="flex size-full items-center justify-center text-center"
             href="mailto:dhyaneshwar98@gmail.com"
           >
             Feedback
           </Link>
         </div>
-        <div className="col-end-7 col-span-3 bg-green-700">
+        <div className="col-span-3 col-end-7 bg-green-700">
           <Link
-            className="flex justify-center items-center size-full text-center"
+            className="flex size-full items-center justify-center text-center"
             href="mailto:dhyaneshwar98@gmail.com"
           >
             Contact Me
           </Link>
         </div>
-        <div className="col-start-1 col-end-7 flex justify-center items-center text-center">
+        <div className="col-start-1 col-end-7 flex items-center justify-center text-center">
           &copy; Copyrights 2024 Dhyaneshwar Nagarajan
         </div>
       </div>
