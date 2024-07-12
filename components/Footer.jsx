@@ -50,7 +50,7 @@ function Footer() {
           </Link>
         </div>
         <div className="col-start-1 col-end-7 flex justify-center items-center text-center">
-          &copy; Dhyaneshwar Nagarajan
+          &copy; Copyrights 2024 Dhyaneshwar Nagarajan
         </div>
       </div>
     </div>
