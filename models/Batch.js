@@ -9,8 +9,8 @@ const BatchSchema = new mongoose.Schema(
     },
   },
   {
-    timestamps: true, // Automatically add createdAt and updatedAt fields
-  }
+    timestamps: true,
+  },
 );
 
 export default mongoose.models.Batch || mongoose.model("Batch", BatchSchema);
